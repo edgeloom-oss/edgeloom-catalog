@@ -1,0 +1,82 @@
+name: Catalog correction
+description: Report stale, incorrect, incomplete, or conflicting catalog evidence
+title: "[Correction] "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for ordinary data-quality problems. Do not disclose an
+        unpatched vulnerability or sensitive information here; use the private
+        security process instead.
+
+  - type: input
+    id: record
+    attributes:
+      label: Affected record and exact catalog revision
+      description: Provide the mapping/source ID, path, and commit or permanent link.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: correction-type
+    attributes:
+      label: Correction type
+      multiple: true
+      options:
+        - Source provenance or digest
+        - Mapping classification or direction
+        - Loss dimension or unbound reason
+        - Evidence locator or interpretation
+        - Source maturity or review lifecycle
+        - License evidence or third-party notice
+        - Limitation or scope
+        - Deprecation or replacement
+        - Other data-quality issue
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-claim
+    attributes:
+      label: Current claim
+      description: Quote or summarize the bounded field or mapping you believe is wrong.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Contradicting or updated evidence
+      description: Provide immutable sources, full commits, paths, digests, locators, and reproduction steps where possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-resolution
+    attributes:
+      label: Proposed resolution
+      description: Explain the correction, lifecycle downgrade, deprecation, or further review needed. It is acceptable to recommend returning the record to candidate.
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Downstream impact
+      description: Identify affected mappings, generated views, or consumers, and whether urgent containment is needed.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Reporting boundaries
+      options:
+        - label: This issue does not disclose an unpatched vulnerability, credential, real PIN or user code, private telemetry, or household identifier.
+          required: true
+        - label: I have separated reproduced facts from inference and uncertainty.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true

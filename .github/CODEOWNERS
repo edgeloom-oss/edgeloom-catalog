@@ -1,0 +1,18 @@
+# The current repository-wide maintainer. More specific ownership can be added
+# as reviewers and maintainers are appointed through GOVERNANCE.md.
+* @infinitywings
+
+# Policy, automation, licensing boundaries, and catalog status changes always
+# require explicit maintainer review.
+/.github/ @infinitywings
+/CODE_OF_CONDUCT.md @infinitywings
+/CONTRIBUTING.md @infinitywings
+/CORE_REVISION @infinitywings
+/GOVERNANCE.md @infinitywings
+/LICENSE @infinitywings
+/MAINTAINERS.md @infinitywings
+/requirements-ci.txt @infinitywings
+/SECURITY.md @infinitywings
+/THIRD_PARTY_NOTICES.md @infinitywings
+/catalog/ @infinitywings
+/scripts/ @infinitywings

@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/edgeloom-oss/edgeloom-catalog/blob/main/SECURITY.md
+    about: Follow the private reporting instructions; do not open a public catalog issue.
+  - name: EdgeLoom tool and schema questions
+    url: https://github.com/edgeloom-oss/edgeloom/discussions
+    about: Ask about the CLI, validators, schemas, patching, translation, or discovery in the core project.
+  - name: Catalog support guide
+    url: https://github.com/edgeloom-oss/edgeloom-catalog/blob/main/SUPPORT.md
+    about: Choose the correct catalog contribution or reporting channel.

@@ -1,0 +1,99 @@
+name: Independent mapping review
+description: Volunteer or record a substantive review of an exact candidate mapping revision
+title: "[Review] "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Review an exact catalog revision. Schema validity alone is not review.
+        A verified lifecycle additionally requires a governed maintainer
+        decision and stable `decision_ref`.
+
+  - type: input
+    id: mapping
+    attributes:
+      label: Mapping-set ID and exact revision
+      description: Provide the path and commit or permanent pull-request link to the bytes reviewed.
+    validations:
+      required: true
+
+  - type: input
+    id: reviewer-id
+    attributes:
+      label: Reviewer identifier
+      description: Use the stable public actor identifier to be recorded in the mapping set.
+      placeholder: github:@reviewer
+    validations:
+      required: true
+
+  - type: textarea
+    id: expertise
+    attributes:
+      label: Relevant experience and review scope
+      description: Describe the ecosystem, protocol, device, SDF, provenance, or reproducibility areas you reviewed. Do not include private personal information.
+    validations:
+      required: true
+
+  - type: textarea
+    id: conflicts
+    attributes:
+      label: Conflict-of-interest disclosure
+      description: State relevant authorship, employment, funding, vendor, standards, or project relationships, or write "None known."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Evidence checked and reproduction performed
+      description: List pinned sources, digest checks, locators, commands, and static inspection. State what you did not check.
+    validations:
+      required: true
+
+  - type: textarea
+    id: findings
+    attributes:
+      label: Mapping findings
+      description: Assess layers, classifications, directions, loss dimensions, unbound reasons, limitations, license evidence, and source maturity.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: recommendation
+    attributes:
+      label: Recommendation
+      options:
+        - Keep as candidate; changes required
+        - Accept as reviewed within the stated scope
+        - Eligible for a separate governed verified decision
+        - Deprecate or replace
+    validations:
+      required: true
+
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Review limitations and required follow-up
+      description: Bound your conclusion and identify unresolved evidence or corrections.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: independence
+    attributes:
+      label: Review attestation
+      options:
+        - label: I did not author the reviewed mapping set and have disclosed material relationships that could affect my independence.
+          required: true
+        - label: I reviewed the exact revision named above, not only a summary or rendered page.
+          required: true
+        - label: I did not execute upstream drivers, scripts, or generated commands as part of catalog validation.
+          required: true
+        - label: My report contains no secrets, real PINs or user codes, private telemetry, or household identifiers.
+          required: true
+        - label: I understand that this review does not by itself confer verified status.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true

@@ -1,0 +1,91 @@
+kind: catalog-mapping-set
+schema_version: "0.1"
+id: synthetic-lock-mapping
+title: Synthetic three-layer lock mapping
+scope:
+  domain: door-lock
+  platform: synthetic-platform
+  protocols:
+    - synthetic-protocol
+source_manifests:
+  - id: synthetic-lock-source
+    path: examples/synthetic-source-manifest.yaml
+    sha256: 6ab12ebca0a674a9ef72bde493292b560c1ca8e66b3c0915573f5fefccb9afd8
+nodes:
+  - id: device.lock-state
+    layer: device-protocol-support
+    artifact:
+      manifest_id: synthetic-lock-source
+      artifact_id: synthetic-device-lock
+    locator: /properties/lockState
+    label: Invented protocol lock-state field
+  - id: platform.lock-state
+    layer: platform-exposure
+    artifact:
+      manifest_id: synthetic-lock-source
+      artifact_id: synthetic-platform-lock
+    locator: /components/0/capabilities/lock
+    label: Invented platform lock-state capability
+  - id: sdf.lock-state
+    layer: neutral-sdf-representation
+    artifact:
+      manifest_id: synthetic-lock-source
+      artifact_id: synthetic-sdf-lock
+    locator: /sdfObject/SyntheticLock/sdfProperty/lockState
+    label: Invented neutral SDF lock-state property
+evidence:
+  - id: evidence.device-lock-state
+    artifact:
+      manifest_id: synthetic-lock-source
+      artifact_id: synthetic-device-lock
+    locator: /properties/lockState
+    summary: The invented protocol fixture declares a lock-state field.
+  - id: evidence.platform-lock-state
+    artifact:
+      manifest_id: synthetic-lock-source
+      artifact_id: synthetic-platform-lock
+    locator: /components/0/capabilities/lock
+    summary: The invented platform fixture exposes a lock-state capability.
+  - id: evidence.sdf-lock-state
+    artifact:
+      manifest_id: synthetic-lock-source
+      artifact_id: synthetic-sdf-lock
+    locator: /sdfObject/SyntheticLock/sdfProperty/lockState
+    summary: The invented neutral fixture represents a lock-state property.
+mappings:
+  - id: map.device-to-platform-lock-state
+    from: device.lock-state
+    to: platform.lock-state
+    classification: one-to-one
+    directions:
+      - read
+      - event
+    evidence_refs:
+      - evidence.device-lock-state
+      - evidence.platform-lock-state
+    limitations:
+      - Equivalence exists only inside this invented contract example.
+  - id: map.platform-to-sdf-lock-state
+    from: platform.lock-state
+    to: sdf.lock-state
+    classification: lossy
+    directions:
+      - read
+      - event
+    loss_dimensions:
+      - enumeration
+    evidence_refs:
+      - evidence.platform-lock-state
+      - evidence.sdf-lock-state
+    limitations:
+      - The invented platform and SDF enumerations intentionally differ.
+review:
+  author: synthetic-author
+  lifecycle: candidate
+  reviewers: []
+  notes: >-
+    This example demonstrates structure only. It is not a verified mapping,
+    adoption claim, interoperability guarantee, or certification.
+limitations:
+  - All repositories, artifacts, capabilities, locators, and mappings are invented.
+  - No upstream content is fetched, distributed, or executed by this example.

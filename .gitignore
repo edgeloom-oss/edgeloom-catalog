@@ -1,0 +1,4 @@
+.DS_Store
+.edgeloom-core/
+.venv/
+__pycache__/
