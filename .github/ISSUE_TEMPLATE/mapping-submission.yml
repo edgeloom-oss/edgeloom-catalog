@@ -1,0 +1,94 @@
+name: Mapping submission
+description: Propose a new evidence-backed candidate mapping set
+title: "[Mapping] "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        New mappings are **candidate** by default. A valid file is not a
+        verified mapping, compatibility guarantee, endorsement, or adoption
+        claim. Do not include secrets, real lock PINs, private telemetry, or
+        third-party artifact bytes.
+
+  - type: input
+    id: mapping-id
+    attributes:
+      label: Proposed mapping-set ID
+      description: Use a stable lowercase identifier matching the catalog contract.
+      placeholder: smartthings-onedm-door-lock
+    validations:
+      required: true
+
+  - type: input
+    id: scope
+    attributes:
+      label: Domain, platform, and protocol scope
+      description: List stable identifiers, not marketing names.
+      placeholder: domain=door-lock; platform=smartthings; protocols=zwave
+    validations:
+      required: true
+
+  - type: textarea
+    id: sources
+    attributes:
+      label: Pinned sources
+      description: For each source, provide the HTTPS repository, full commit, paths, SHA-256 digests, source maturity, and license-evidence path.
+      placeholder: |
+        source id:
+        repository:
+        commit:
+        artifact paths and sha256:
+        source maturity and evidence:
+        license expression and evidence path:
+    validations:
+      required: true
+
+  - type: textarea
+    id: layers
+    attributes:
+      label: Three evidence layers
+      description: Identify evidence for device/protocol support, native platform exposure, and neutral SDF representation separately.
+    validations:
+      required: true
+
+  - type: textarea
+    id: mappings
+    attributes:
+      label: Proposed mappings
+      description: Describe each one-to-one, lossy, ambiguous, or unbound edge; include direction, loss dimensions or unbound reason, and evidence locators.
+    validations:
+      required: true
+
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Limitations and unresolved questions
+      description: State scope limits, uncertainty, source gaps, and what has not been reproduced.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and validation plan
+      description: Explain how another contributor can obtain the pinned bytes, check digests, inspect locators, and run static validation without executing upstream code.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Contribution boundaries
+      options:
+        - label: I understand this submission begins as candidate and does not claim certification, adoption, endorsement, or universal compatibility.
+          required: true
+        - label: I have not included secrets, real PINs or user codes, private telemetry, household identifiers, or other sensitive data.
+          required: true
+        - label: I am referencing upstream artifacts rather than vendoring their bytes, or I have documented redistribution permission and required notices.
+          required: true
+        - label: My validation plan does not execute upstream drivers, scripts, or generated commands.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true

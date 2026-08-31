@@ -1,0 +1,92 @@
+name: Source update
+description: Propose a new immutable upstream pin or update an existing source manifest
+title: "[Source] "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A source update changes the evidence under a record. It may require
+        affected mappings to return to candidate and undergo review again.
+        Branches, tags, release pages, and mutable URLs are not immutable pins.
+
+  - type: input
+    id: manifest-id
+    attributes:
+      label: Source-manifest ID
+      placeholder: onedm-lock-models
+    validations:
+      required: true
+
+  - type: input
+    id: repository
+    attributes:
+      label: Upstream HTTPS Git repository
+      placeholder: https://github.com/example/project
+    validations:
+      required: true
+
+  - type: input
+    id: current-commit
+    attributes:
+      label: Current pinned commit
+      description: Leave empty only when proposing a new source manifest.
+      placeholder: 40-character lowercase Git commit ID
+
+  - type: input
+    id: proposed-commit
+    attributes:
+      label: Proposed pinned commit
+      description: A full immutable 40-character lowercase Git commit ID.
+      placeholder: 0123456789abcdef0123456789abcdef01234567
+    validations:
+      required: true
+
+  - type: textarea
+    id: artifacts
+    attributes:
+      label: Changed artifacts and digests
+      description: List added, removed, or changed paths, old/new SHA-256 digests, roles, and evidence layers.
+    validations:
+      required: true
+
+  - type: textarea
+    id: license
+    attributes:
+      label: License and source-maturity evidence
+      description: Give the expression, evidence path/locator in the proposed tree, source maturity, and any ambiguity. Do not provide a legal conclusion.
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-mappings
+    attributes:
+      label: Affected mapping sets
+      description: List every mapping that cites this manifest and explain whether semantics, evidence, limitations, or lifecycle must change.
+    validations:
+      required: true
+
+  - type: textarea
+    id: review-plan
+    attributes:
+      label: Revalidation and review plan
+      description: Explain how digests and mappings will be checked statically and which records return to candidate.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Source boundaries
+      options:
+        - label: I checked the exact proposed commit and did not substitute a branch, tag, or mutable page.
+          required: true
+        - label: I have not included upstream executable bytes, secrets, real PINs or user codes, private telemetry, or household identifiers.
+          required: true
+        - label: I understand that source maturity and license fields are evidence-backed assertions, not EdgeLoom endorsement or legal advice.
+          required: true
+        - label: My validation plan does not execute upstream code.
+          required: true
+        - label: I agree to follow the Code of Conduct.
+          required: true

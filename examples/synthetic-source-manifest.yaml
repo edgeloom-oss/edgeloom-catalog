@@ -1,0 +1,44 @@
+kind: source-manifest
+schema_version: "0.1"
+id: synthetic-lock-source
+ecosystem: synthetic-example
+description: >-
+  Invented source metadata used only to demonstrate the catalog contract. No
+  upstream repository or real device artifact is represented.
+repository:
+  url: https://example.invalid/edgeloom-synthetic-fixtures.git
+  commit: "1111111111111111111111111111111111111111"
+artifacts:
+  - id: synthetic-device-lock
+    layer: device-protocol-support
+    path: fixtures/device-lock.json
+    sha256: "2222222222222222222222222222222222222222222222222222222222222222"
+    media_type: application/json
+    artifact_role: driver-config
+    source_maturity: experimental
+    license:
+      expression: LicenseRef-Synthetic-Example
+      evidence_path: LICENSE.synthetic
+    description: Invented protocol-level lock-state fixture.
+  - id: synthetic-platform-lock
+    layer: platform-exposure
+    path: fixtures/platform-lock.yaml
+    sha256: "3333333333333333333333333333333333333333333333333333333333333333"
+    media_type: application/yaml
+    artifact_role: platform-profile
+    source_maturity: experimental
+    license:
+      expression: LicenseRef-Synthetic-Example
+      evidence_path: LICENSE.synthetic
+    description: Invented native-platform lock profile fixture.
+  - id: synthetic-sdf-lock
+    layer: neutral-sdf-representation
+    path: fixtures/lock.sdf.json
+    sha256: "4444444444444444444444444444444444444444444444444444444444444444"
+    media_type: application/json
+    artifact_role: sdf-model
+    source_maturity: experimental
+    license:
+      expression: LicenseRef-Synthetic-Example
+      evidence_path: LICENSE.synthetic
+    description: Invented neutral SDF lock model fixture.

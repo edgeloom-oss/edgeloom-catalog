@@ -1,0 +1,55 @@
+# Repository layout
+
+EdgeLoom separates executable tooling from reviewable catalog data. The
+[core repository](https://github.com/edgeloom-oss/edgeloom) defines and releases
+the schemas, validators, CLI, adapters, and renderers. This repository stores
+records that conform to those contracts.
+
+## Bootstrap layout
+
+```text
+.
+├── catalog/
+│   ├── sources/       # pinned source manifests
+│   ├── mappings/      # mapping sets
+│   ├── evidence/      # repository-authored evidence records
+│   └── reviews/       # governed review records
+├── examples/          # synthetic, non-production examples
+├── docs/              # policy and contributor documentation
+├── scripts/           # repository containment around the pinned core CLI
+└── .github/           # contribution templates and CI configuration
+```
+
+The versioned schema definitions remain in the core repository. Catalog
+validation selects the explicit EdgeLoom revision in
+[`CORE_REVISION`](../CORE_REVISION) rather than copying and modifying those
+definitions here. The repository script supplies file-location, type, size, and
+symlink checks; it does not implement a schema or a cross-file semantic
+resolver.
+
+## Record flow
+
+1. A source manifest identifies an HTTPS Git repository, a full commit object
+   ID, a repository-relative artifact path, and a SHA-256 digest.
+2. A mapping set cites those manifests and records relationships, evidence,
+   semantic loss, uncertainty, and limitations.
+3. Independent review may advance the mapping through the lifecycle described
+   in [Status and review](status-and-review.md).
+4. A future renderer may produce a static view from accepted records. Generated
+   output is not a second source of truth.
+
+Paths in mapping records are resolved from the catalog repository root. They
+must not depend on a contributor's home directory, checkout location, branch
+name, or unpinned network content.
+
+## Upstream material
+
+The normal contribution is a reference plus immutable commit and digest, not a
+copy of an upstream driver, model, profile, manual, or dataset. If a future use
+case requires storing third-party bytes, redistribution authority and
+attribution must be documented before those bytes enter the repository. See
+[Licensing](licensing.md).
+
+During bootstrap, canonical catalog directories contain boundary documentation
+only, and examples are synthetic. Real pilot records, verified mappings, and an
+independent Pages site are outside the current repository contents.
