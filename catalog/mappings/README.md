@@ -1,7 +1,7 @@
 # Mapping sets
 
-This directory is reserved for reviewed EdgeLoom `catalog-mapping-set`
-documents. Every mapping set must keep three evidence layers distinct:
+This directory holds EdgeLoom `catalog-mapping-set` documents. Every mapping
+set must keep three evidence layers distinct:
 
 1. device or protocol support;
 2. native platform exposure; and
@@ -18,3 +18,7 @@ mapping set and its declared manifest IDs, but it does not open referenced
 manifest paths, recompute their digests, or resolve artifact IDs across files.
 Reviewers must check those cross-file relationships explicitly until a
 directory-level resolver is implemented in EdgeLoom core.
+
+The initial YRD156 records are founder-authored candidates. They deliberately
+include loss, ambiguity, and unbound gaps; none is independently reviewed or
+verified.

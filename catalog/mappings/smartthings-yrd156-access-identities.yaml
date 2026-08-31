@@ -1,0 +1,183 @@
+kind: catalog-mapping-set
+schema_version: "0.1"
+id: smartthings-yrd156-access-identities
+title: Yale YRD156 migrated-path access identity and lock-code candidate
+scope:
+  domain: door-lock
+  platform: smartthings
+  protocols:
+    - zwave
+source_manifests:
+  - id: smartthings-zwave-lock-6b8a9cf
+    path: catalog/sources/smartthings-zwave-lock-6b8a9cf.yaml
+    sha256: 3bc27fe065666a0a56022c97b1b9453779f783d8bed81fd400ab4c63b5e749b0
+  - id: onedm-ocf-lock-models-c97d095
+    path: catalog/sources/onedm-ocf-lock-models-c97d095.yaml
+    sha256: e2b0ae69e3b025b43469e9a536898c33583e5beede3ad49b6c49d8d39c83315e
+nodes:
+  - id: device.yrd156
+    layer: device-protocol-support
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-fingerprints
+    locator: zwaveManufacturer[id=Yale/YRD156]
+    label: SmartThings YRD156 Z-Wave fingerprint and base-lock assignment
+  - id: device.zwave-user-code-reports
+    layer: device-protocol-support
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-responses
+    locator: lua:function ZwaveHandlers.user_code_report
+    label: Z-Wave user-code reports on the post-migration handler path
+  - id: platform.smartthings-access-identities
+    layer: platform-exposure
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities[id=lockCredentials|lockUsers]
+    label: Post-migration SmartThings credential and user identity capabilities
+  - id: platform.smartthings-credential-payload
+    layer: platform-exposure
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities[id=lockCredentials]
+    label: Post-migration SmartThings credential write payload
+  - id: neutral.ocf-lock-code-list
+    layer: neutral-sdf-representation
+    artifact:
+      manifest_id: onedm-ocf-lock-models-c97d095
+      artifact_id: onedm-ocf-lock-code
+    locator: /sdfObject/lock.code/sdfProperty/lockCodeList
+    label: OCF-derived array of lock-code strings
+evidence:
+  - id: evidence.yrd156-profile-assignment
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-fingerprints
+    locator: zwaveManufacturer[id=Yale/YRD156]
+    summary: >-
+      The pinned fingerprint identifies product tuple 0x0129/0x803A/0x0508
+      and assigns the YRD156 to the base-lock profile used by this record.
+  - id: evidence.smartthings-user-credential-records
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-responses
+    locator: lua:function ZwaveHandlers.user_code_report
+    summary: >-
+      On the current handler path, the function derives userIndex, userName,
+      userType, credentialIndex, credentialType, and credentialName records
+      from Z-Wave user-code reports.
+  - id: evidence.smartthings-access-profile
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities
+    summary: >-
+      The base-lock profile separately exposes lockCodes, lockCredentials, and
+      lockUsers capabilities.
+  - id: evidence.smartthings-pin-write-path
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-capability-handlers
+    locator: lua:function CapabilityHandlers.add_credential|update_credential
+    summary: >-
+      Credential data is accepted as a write-time UserCode payload. The pinned
+      response path records slot occupancy and identity metadata rather than
+      returning or caching the PIN value.
+  - id: evidence.smartthings-current-handler-registration
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-driver-entry
+    locator: lua:driver_template.capability_handlers|driver_template.zwave_handlers
+    summary: >-
+      The main driver template registers the current lockUsers,
+      lockCredentials, and user-code report handlers; migrated marker state is
+      emitted only when the persisted migration flag is true.
+  - id: evidence.smartthings-legacy-dispatch-gate
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-legacy-dispatch-gate
+    locator: lua:return function(opts, driver, device, ...)
+    summary: >-
+      When SLGA_MIGRATED is unset or false, the pinned can-handle function
+      routes the device to the legacy subdriver.
+  - id: evidence.smartthings-migration-transition
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-legacy-migration-handler
+    locator: lua:function migrate
+    summary: >-
+      The explicit legacy migration command emits lockUsers and lockCredentials
+      state and then persists SLGA_MIGRATED as true.
+  - id: evidence.ocf-lock-code-list
+    artifact:
+      manifest_id: onedm-ocf-lock-models-c97d095
+      artifact_id: onedm-ocf-lock-code
+    locator: /sdfObject/lock.code/sdfProperty/lockCodeList
+    summary: >-
+      The SDF model defines an array of string lock-code values but no user or
+      credential identity, type, lifecycle, authorization, or privacy metadata.
+mappings:
+  - id: map.smartthings-access-identities-to-sdf
+    from: platform.smartthings-access-identities
+    classification: unbound
+    unbound_reason: neutral-model-missing
+    directions:
+      - read
+      - write
+      - event
+    evidence_refs:
+      - evidence.yrd156-profile-assignment
+      - evidence.smartthings-user-credential-records
+      - evidence.smartthings-access-profile
+      - evidence.smartthings-pin-write-path
+      - evidence.smartthings-current-handler-registration
+      - evidence.smartthings-legacy-dispatch-gate
+      - evidence.smartthings-migration-transition
+      - evidence.ocf-lock-code-list
+    limitations:
+      - >-
+        The conclusion is bounded to the pinned lock-code SDF object; other SDF
+        objects or future extensions might represent identity metadata.
+  - id: map.smartthings-credential-payload-to-sdf-list
+    from: platform.smartthings-credential-payload
+    to: neutral.ocf-lock-code-list
+    classification: ambiguous
+    directions:
+      - write
+    evidence_refs:
+      - evidence.yrd156-profile-assignment
+      - evidence.smartthings-user-credential-records
+      - evidence.smartthings-access-profile
+      - evidence.smartthings-pin-write-path
+      - evidence.smartthings-current-handler-registration
+      - evidence.smartthings-legacy-dispatch-gate
+      - evidence.smartthings-migration-transition
+      - evidence.ocf-lock-code-list
+    limitations:
+      - >-
+        The write path accepts credentialData as a PIN payload, while the
+        report path represents slot occupancy and identity metadata; the files
+        do not establish one reversible value-level representation.
+      - No transformation is proposed for security-sensitive credential values.
+review:
+  author: github:@infinitywings
+  lifecycle: candidate
+  reviewers: []
+  notes: >-
+    Founder-authored candidate for the migrated handler path; not independently
+    reviewed or verified.
+limitations:
+  - No real PIN, lock code, user identifier, or device credential is stored here.
+  - The analysis is based on pinned source artifacts, not device or account tests.
+  - >-
+    No pinned record establishes the SLGA_MIGRATED state of a real YRD156.
+    Devices without a true migration flag use legacy/default handlers whose
+    user-code behavior is outside this mapping set.
+  - >-
+    The SDF object is a neutral data model, not an authorization or credential
+    management specification.
+  - >-
+    Contract version 0.1 lacks a driver-source artifact role; the pinned Lua
+    source is transparently recorded under the generic evidence role.

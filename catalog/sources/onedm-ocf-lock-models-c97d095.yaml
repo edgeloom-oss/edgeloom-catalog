@@ -1,0 +1,35 @@
+kind: source-manifest
+schema_version: "0.1"
+id: onedm-ocf-lock-models-c97d095
+ecosystem: onedm
+description: >-
+  Pinned OCF-derived SDF artifacts hosted by the One Data Model organization.
+  Repository placement does not establish OneDM adoption, active maintenance,
+  endorsement, or compatibility. The files are referenced, not vendored.
+repository:
+  url: https://github.com/one-data-model/ocf-models
+  commit: "c97d095c239539b8242ceb4f12cf6deaeedb16e2"
+artifacts:
+  - id: onedm-ocf-lock-status
+    layer: neutral-sdf-representation
+    path: sdfObject/sdfobject-lock_status.sdf.json
+    sha256: "569e0e7cbb0338a1aba52912c7fd0a69ff5eb36ff69c40c9afe9abb617859590"
+    media_type: application/sdf+json
+    artifact_role: sdf-model
+    source_maturity: unknown
+    license:
+      expression: BSD-3-Clause
+      evidence_path: LICENSE
+    description: >-
+      OCF-derived two-value lockState model with Locked and Unlocked values.
+  - id: onedm-ocf-lock-code
+    layer: neutral-sdf-representation
+    path: sdfObject/sdfobject-lock_code.sdf.json
+    sha256: "0b446f26111f8cf9bf496f9fe63136bf1b5729d9978067e623cf5984979b50f1"
+    media_type: application/sdf+json
+    artifact_role: sdf-model
+    source_maturity: unknown
+    license:
+      expression: BSD-3-Clause
+      evidence_path: LICENSE
+    description: OCF-derived lockCodeList model containing an array of strings.

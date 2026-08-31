@@ -1,0 +1,50 @@
+kind: source-manifest
+schema_version: "0.1"
+id: zwave-js-yrd156-c4c599e
+ecosystem: zwave-js
+description: >-
+  Pinned community configuration evidence for the Yale YRD156. This source is
+  not a statement from Yale or the Z-Wave Alliance and is not vendored here.
+repository:
+  url: https://github.com/zwave-js/zwave-js
+  commit: "c4c599e1e6a0f6fab1f356f92307b8f94e895e60"
+artifacts:
+  - id: zwave-js-yrd156-config
+    layer: device-protocol-support
+    path: packages/config/config/devices/0x0129/yrd156.json
+    sha256: "16010a6f5f9ca0facee0da1e3312277c66e2699c3a8f7a74d252492e2b98c783"
+    media_type: application/json
+    artifact_role: driver-config
+    source_maturity: community
+    license:
+      expression: MIT
+      evidence_path: LICENSE
+    description: >-
+      Community device configuration identifying the YRD156 and its imported
+      Z-Wave configuration parameters.
+  - id: zwave-js-yale-template
+    layer: device-protocol-support
+    path: packages/config/config/devices/0x0129/templates/yale_template.json
+    sha256: "6f37e437d63e57d81affaa665722e19559f85aef46ebedd8fa091289a46f4a43"
+    media_type: application/json5
+    artifact_role: driver-config
+    source_maturity: community
+    license:
+      expression: MIT
+      evidence_path: LICENSE
+    description: >-
+      Shared JSON5 community parameter definitions referenced by the YRD156
+      config, including auto-relock enable and duration fields.
+  - id: zwave-js-master-template
+    layer: device-protocol-support
+    path: packages/config/config/devices/templates/master_template.json
+    sha256: "bebb75ac796d62ba116da2fd366b895d8418c83360d26df3252204530df248bf"
+    media_type: application/json5
+    artifact_role: driver-config
+    source_maturity: community
+    license:
+      expression: MIT
+      evidence_path: LICENSE
+    description: >-
+      Shared JSON5 base definitions imported by device-family templates,
+      including the 0-to-180 unsigned range used for auto-relock duration.
