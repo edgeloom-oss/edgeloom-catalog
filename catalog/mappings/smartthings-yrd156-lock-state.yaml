@@ -1,0 +1,147 @@
+kind: catalog-mapping-set
+schema_version: "0.1"
+id: smartthings-yrd156-lock-state
+title: Yale YRD156 migrated-path SmartThings lock-state mapping candidate
+scope:
+  domain: door-lock
+  platform: smartthings
+  protocols:
+    - zwave
+source_manifests:
+  - id: smartthings-zwave-lock-6b8a9cf
+    path: catalog/sources/smartthings-zwave-lock-6b8a9cf.yaml
+    sha256: 3bc27fe065666a0a56022c97b1b9453779f783d8bed81fd400ab4c63b5e749b0
+  - id: onedm-ocf-lock-models-c97d095
+    path: catalog/sources/onedm-ocf-lock-models-c97d095.yaml
+    sha256: e2b0ae69e3b025b43469e9a536898c33583e5beede3ad49b6c49d8d39c83315e
+nodes:
+  - id: device.yrd156
+    layer: device-protocol-support
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-fingerprints
+    locator: zwaveManufacturer[id=Yale/YRD156]
+    label: SmartThings YRD156 Z-Wave fingerprint and base-lock assignment
+  - id: device.zwave-access-control-events
+    layer: device-protocol-support
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-responses
+    locator: lua:function ZwaveHandlers.door_operation_event_handler
+    label: Z-Wave access-control events on the post-migration handler path
+  - id: platform.smartthings-lock-binary-subset
+    layer: platform-exposure
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities[id=lock]
+    label: Strict locked and unlocked subset of the SmartThings lock capability
+  - id: neutral.ocf-lock-state
+    layer: neutral-sdf-representation
+    artifact:
+      manifest_id: onedm-ocf-lock-models-c97d095
+      artifact_id: onedm-ocf-lock-status
+    locator: /sdfObject/lock.status/sdfProperty/lockState
+    label: OCF-derived SDF Locked and Unlocked state property
+evidence:
+  - id: evidence.yrd156-profile-assignment
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-fingerprints
+    locator: zwaveManufacturer[id=Yale/YRD156]
+    summary: >-
+      The pinned fingerprint identifies product tuple 0x0129/0x803A/0x0508
+      and assigns the YRD156 to the base-lock profile.
+  - id: evidence.smartthings-lock-event-values
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-responses
+    locator: lua:function ZwaveHandlers.door_operation_event_handler
+    summary: >-
+      On the current handler path, the pinned function maps a strict operation
+      subset to locked or unlocked, maps other outcomes to unknown, and can
+      attach method and user data.
+  - id: evidence.smartthings-current-handler-registration
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-driver-entry
+    locator: lua:driver_template.zwave_handlers
+    summary: >-
+      The main driver template registers the pinned current Z-Wave response
+      functions for notification and user-code reports.
+  - id: evidence.smartthings-legacy-dispatch-gate
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-legacy-dispatch-gate
+    locator: lua:return function(opts, driver, device, ...)
+    summary: >-
+      When the persisted SLGA_MIGRATED field is unset or false, the pinned
+      can-handle function selects the legacy subdriver instead of this path.
+  - id: evidence.smartthings-lock-profile
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities[id=lock]
+    summary: The base-lock profile exposes the native SmartThings lock capability.
+  - id: evidence.ocf-binary-lock-state
+    artifact:
+      manifest_id: onedm-ocf-lock-models-c97d095
+      artifact_id: onedm-ocf-lock-status
+    locator: /sdfObject/lock.status/sdfProperty/lockState
+    summary: The pinned SDF property allows exactly Locked and Unlocked strings.
+mappings:
+  - id: map.smartthings-binary-state-to-sdf
+    from: platform.smartthings-lock-binary-subset
+    to: neutral.ocf-lock-state
+    classification: one-to-one
+    directions:
+      - event
+    evidence_refs:
+      - evidence.yrd156-profile-assignment
+      - evidence.smartthings-lock-event-values
+      - evidence.smartthings-current-handler-registration
+      - evidence.smartthings-legacy-dispatch-gate
+      - evidence.smartthings-lock-profile
+      - evidence.ocf-binary-lock-state
+    limitations:
+      - >-
+        This classification covers only the strict locked/unlocked subset and
+        does not claim a complete SmartThings lock-state translation.
+      - Enum spelling conversion is not represented by contract version 0.1.
+  - id: map.smartthings-extended-event-to-sdf
+    from: device.zwave-access-control-events
+    to: neutral.ocf-lock-state
+    classification: lossy
+    directions:
+      - event
+    loss_dimensions:
+      - enumeration
+      - other
+    evidence_refs:
+      - evidence.yrd156-profile-assignment
+      - evidence.smartthings-lock-event-values
+      - evidence.smartthings-current-handler-registration
+      - evidence.smartthings-legacy-dispatch-gate
+      - evidence.ocf-binary-lock-state
+    limitations:
+      - The SDF property has no value corresponding to SmartThings unknown.
+      - Method, user index, user name, and user type metadata are not preserved.
+review:
+  author: github:@infinitywings
+  lifecycle: candidate
+  reviewers: []
+  notes: >-
+    Founder-authored candidate for the migrated handler path; not independently
+    reviewed or verified.
+limitations:
+  - The analysis is based on pinned published artifacts, not physical-device tests.
+  - >-
+    No pinned record establishes the SLGA_MIGRATED state of a real YRD156.
+    Devices without a true migration flag use legacy/default handlers whose
+    behavior is outside this mapping set.
+  - >-
+    The OCF-derived SDF repository location is not evidence of OneDM adoption,
+    endorsement, active maintenance, or interoperability.
+  - >-
+    Contract version 0.1 lacks a driver-source artifact role; the pinned Lua
+    source is transparently recorded under the generic evidence role.

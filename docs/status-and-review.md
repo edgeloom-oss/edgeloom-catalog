@@ -58,8 +58,9 @@ The Git history, pull-request discussion, and applicable
 [Governance](../GOVERNANCE.md) process supply the human trust context around
 machine-valid records.
 
-## Bootstrap boundary
+## Current pilot boundary
 
 Synthetic examples may exercise lifecycle values to test validation, but they
-are not catalog findings. This repository currently contains no real pilot data
-and no verified real-world mapping.
+are not catalog findings. The repository's first real YRD156 records are
+founder-authored `candidate` mappings with no independent reviewer. They are
+not reviewed, verified, adopted, certified, endorsed, or proven compatible.

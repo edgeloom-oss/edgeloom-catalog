@@ -1,6 +1,6 @@
 # Source manifests
 
-This directory is reserved for reviewed EdgeLoom `source-manifest` documents. A
+This directory holds EdgeLoom `source-manifest` documents. A
 manifest pins one upstream Git repository to a full commit ID and records the
 path, SHA-256 digest, media type, evidence layer, artifact role, source maturity,
 and declared license evidence for each referenced artifact.
@@ -19,3 +19,7 @@ exact bytes at the declared commit.
 The current EdgeLoom validator checks each manifest's schema and local semantic
 constraints. It does not fetch the upstream repository or independently
 confirm the declared artifact bytes, license, or source-maturity statement.
+
+The first non-synthetic manifests pin current SmartThings lock artifacts,
+community zwave-js YRD156 configuration evidence, and OCF-derived SDF artifacts
+hosted by OneDM. Their presence is not an adoption or endorsement claim.

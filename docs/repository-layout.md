@@ -50,6 +50,7 @@ case requires storing third-party bytes, redistribution authority and
 attribution must be documented before those bytes enter the repository. See
 [Licensing](licensing.md).
 
-During bootstrap, canonical catalog directories contain boundary documentation
-only, and examples are synthetic. Real pilot records, verified mappings, and an
-independent Pages site are outside the current repository contents.
+The catalog now includes a bounded founder-seeded YRD156 candidate pilot in
+addition to synthetic examples. No real mapping has completed independent
+review or become verified, and an independent Pages site remains outside the
+current repository contents.

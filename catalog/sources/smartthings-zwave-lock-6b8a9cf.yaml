@@ -1,0 +1,105 @@
+kind: source-manifest
+schema_version: "0.1"
+id: smartthings-zwave-lock-6b8a9cf
+ecosystem: smartthings
+description: >-
+  Pinned SmartThings Z-Wave lock driver evidence used by the initial
+  EdgeLoom lock pilot. The source is referenced in place and is not vendored.
+repository:
+  url: https://github.com/SmartThingsCommunity/SmartThingsEdgeDrivers
+  commit: "6b8a9cf69462d314a7c81b7a709037744d7d788d"
+artifacts:
+  - id: smartthings-zwave-lock-fingerprints
+    layer: device-protocol-support
+    path: drivers/SmartThings/zwave-lock/fingerprints.yml
+    sha256: "487db4ecba1052afc06e6da90e9611075f82687ff9a552c96005376a433d32b4"
+    media_type: application/yaml
+    artifact_role: fingerprints
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Device fingerprints and profile assignments, including the Yale YRD156
+      assignment to the base-lock profile.
+  - id: smartthings-base-lock-profile
+    layer: platform-exposure
+    path: drivers/SmartThings/zwave-lock/profiles/base-lock.yml
+    sha256: "50ffef1a66f70e80804e92c5cd451129e4e36bc67ab6707a10e10f06579db8f8"
+    media_type: application/yaml
+    artifact_role: platform-profile
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Native SmartThings profile exposing lock, lockCodes, lockCredentials,
+      lockUsers, battery, and refresh capabilities.
+  - id: smartthings-zwave-responses
+    layer: device-protocol-support
+    path: drivers/SmartThings/zwave-lock/src/lock_handlers/zwave_responses.lua
+    sha256: "7a5d5a4ec5d93b6309cd3dc05c3eaf1285158648dab63ddf00570b543e724aed"
+    media_type: text/x-lua
+    artifact_role: evidence
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Driver-source evidence for the Z-Wave reports interpreted before they are
+      translated into SmartThings lock, credential, and user events. Contract
+      v0.1 uses its generic evidence role because it has no driver-source role.
+  - id: smartthings-zwave-capability-handlers
+    layer: device-protocol-support
+    path: drivers/SmartThings/zwave-lock/src/lock_handlers/capabilities.lua
+    sha256: "0cc41262f1cfd7952041847441a346996e80ca8fd7f680d9a253d8ad6362df50"
+    media_type: text/x-lua
+    artifact_role: evidence
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Driver-source evidence showing that credentialData is used as the
+      write-time Z-Wave UserCode payload. Contract v0.1 records this source
+      under its generic evidence role because it has no driver-source role.
+  - id: smartthings-zwave-lock-driver-entry
+    layer: device-protocol-support
+    path: drivers/SmartThings/zwave-lock/src/init.lua
+    sha256: "ea3b16fc7567292ecd844b211c94da9034317b8bbc38743a82b86a20c379df67"
+    media_type: text/x-lua
+    artifact_role: evidence
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Driver-source evidence registering the current user, credential, and
+      Z-Wave handlers and restoring migrated capability state. Contract v0.1
+      records this source under its generic evidence role.
+  - id: smartthings-legacy-dispatch-gate
+    layer: device-protocol-support
+    path: drivers/SmartThings/zwave-lock/src/legacy-handlers/can_handle.lua
+    sha256: "3feda213e4b61f70b6ae0dc6313af0e603f5de5b3f6cfdf0f2a42d1aba929f51"
+    media_type: text/x-lua
+    artifact_role: evidence
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Driver-source evidence routing devices without a true persisted
+      SLGA_MIGRATED field to the legacy handler path.
+  - id: smartthings-legacy-migration-handler
+    layer: device-protocol-support
+    path: drivers/SmartThings/zwave-lock/src/legacy-handlers/init.lua
+    sha256: "20f3fad7a4b074c86983950efdf07f4ef59cb901bd86acfae967b3d65b7d49cf"
+    media_type: text/x-lua
+    artifact_role: evidence
+    source_maturity: official
+    license:
+      expression: Apache-2.0
+      evidence_path: LICENSE
+    description: >-
+      Driver-source evidence for the explicit lockCodes migration command,
+      emitted lockUsers and lockCredentials state, and persisted migration flag.

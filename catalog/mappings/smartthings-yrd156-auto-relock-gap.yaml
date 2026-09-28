@@ -1,0 +1,147 @@
+kind: catalog-mapping-set
+schema_version: "0.1"
+id: smartthings-yrd156-auto-relock-gap
+title: Yale YRD156 auto-relock exposure and neutral-model gaps
+scope:
+  domain: door-lock
+  platform: smartthings
+  protocols:
+    - zwave
+source_manifests:
+  - id: smartthings-zwave-lock-6b8a9cf
+    path: catalog/sources/smartthings-zwave-lock-6b8a9cf.yaml
+    sha256: 3bc27fe065666a0a56022c97b1b9453779f783d8bed81fd400ab4c63b5e749b0
+  - id: zwave-js-yrd156-c4c599e
+    path: catalog/sources/zwave-js-yrd156-c4c599e.yaml
+    sha256: 72d981b9af12b3d525a45bb0f5dc37941bab918287ac327294e5ac87c97790de
+  - id: onedm-ocf-lock-models-c97d095
+    path: catalog/sources/onedm-ocf-lock-models-c97d095.yaml
+    sha256: e2b0ae69e3b025b43469e9a536898c33583e5beede3ad49b6c49d8d39c83315e
+nodes:
+  - id: device.yrd156-auto-relock-time
+    layer: device-protocol-support
+    artifact:
+      manifest_id: zwave-js-yrd156-c4c599e
+      artifact_id: zwave-js-yale-template
+    locator: /auto_relock_time_180
+    label: Community-described YRD156 auto-relock duration parameter
+  - id: platform.smartthings-base-lock-capabilities
+    layer: platform-exposure
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities
+    label: SmartThings base-lock capability list
+  - id: neutral.ocf-lock-status-properties
+    layer: neutral-sdf-representation
+    artifact:
+      manifest_id: onedm-ocf-lock-models-c97d095
+      artifact_id: onedm-ocf-lock-status
+    locator: /sdfObject/lock.status/sdfProperty
+    label: Property set in the OCF-derived lock-status SDF object
+evidence:
+  - id: evidence.yrd156-community-identity
+    artifact:
+      manifest_id: zwave-js-yrd156-c4c599e
+      artifact_id: zwave-js-yrd156-config
+    locator: /manufacturerId|/devices/0/productType|/devices/0/productId
+    summary: >-
+      The community configuration identifies the YRD156 with product tuple
+      0x0129/0x803A/0x0508.
+  - id: evidence.yrd156-smartthings-profile-assignment
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-zwave-lock-fingerprints
+    locator: zwaveManufacturer[id=Yale/YRD156]
+    summary: >-
+      The SmartThings fingerprint uses the same product tuple and assigns it to
+      the base-lock profile examined for the platform-exposure gap.
+  - id: evidence.yrd156-auto-relock-import
+    artifact:
+      manifest_id: zwave-js-yrd156-c4c599e
+      artifact_id: zwave-js-yrd156-config
+    locator: /paramInformation/[#=3]
+    summary: >-
+      The pinned community YRD156 config imports auto_relock_time_180 for
+      configuration parameter 3.
+  - id: evidence.auto-relock-template
+    artifact:
+      manifest_id: zwave-js-yrd156-c4c599e
+      artifact_id: zwave-js-yale-template
+    locator: /auto_relock_time_180
+    summary: >-
+      The imported template describes Auto Relock Time in seconds with a
+      default value of 30 and imports the named base_0-180_nounit definition.
+  - id: evidence.auto-relock-range
+    artifact:
+      manifest_id: zwave-js-yrd156-c4c599e
+      artifact_id: zwave-js-master-template
+    locator: /base_0-180_nounit
+    summary: >-
+      The pinned shared base definition supplies an unsigned minimum of 0 and
+      maximum of 180 for the imported duration field.
+  - id: evidence.base-lock-capability-enumeration
+    artifact:
+      manifest_id: smartthings-zwave-lock-6b8a9cf
+      artifact_id: smartthings-base-lock-profile
+    locator: /components/0/capabilities
+    summary: >-
+      The complete pinned base-lock capability list has lock, lockCodes,
+      lockCredentials, lockUsers, battery, and refresh, but no auto-relock field.
+  - id: evidence.ocf-lock-status-property-enumeration
+    artifact:
+      manifest_id: onedm-ocf-lock-models-c97d095
+      artifact_id: onedm-ocf-lock-status
+    locator: /sdfObject/lock.status/sdfProperty
+    summary: >-
+      The complete pinned lock-status property set contains lockState only and
+      does not contain an auto-relock enable or duration property.
+mappings:
+  - id: map.yrd156-auto-relock-to-smartthings
+    from: device.yrd156-auto-relock-time
+    classification: unbound
+    unbound_reason: platform-not-exposed
+    directions:
+      - read
+      - write
+    evidence_refs:
+      - evidence.yrd156-community-identity
+      - evidence.yrd156-smartthings-profile-assignment
+      - evidence.yrd156-auto-relock-import
+      - evidence.auto-relock-template
+      - evidence.auto-relock-range
+      - evidence.base-lock-capability-enumeration
+    limitations:
+      - >-
+        Absence is established only for the pinned base-lock profile; another
+        profile, custom capability, or later commit could expose this setting.
+  - id: map.yrd156-auto-relock-to-sdf
+    from: device.yrd156-auto-relock-time
+    classification: unbound
+    unbound_reason: neutral-model-missing
+    directions:
+      - read
+      - write
+    evidence_refs:
+      - evidence.yrd156-community-identity
+      - evidence.yrd156-auto-relock-import
+      - evidence.auto-relock-template
+      - evidence.auto-relock-range
+      - evidence.ocf-lock-status-property-enumeration
+    limitations:
+      - >-
+        The finding is bounded to the pinned OCF-derived lock-status model and
+        does not assert that no other SDF model can describe auto relock.
+review:
+  author: github:@infinitywings
+  lifecycle: candidate
+  reviewers: []
+  notes: >-
+    Founder-authored candidate; not independently reviewed or verified.
+limitations:
+  - The zwave-js configuration is community evidence, not Yale authority.
+  - No physical YRD156 or SmartThings hub was tested for this candidate.
+  - >-
+    The current schema requires a neutral-layer context node even when the
+    mapping conclusion is neutral-model-missing; that context is the bounded
+    lock-status property set examined for this record.

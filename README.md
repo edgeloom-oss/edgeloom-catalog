@@ -6,9 +6,10 @@ smart-home device and protocol support, native platform exposure, and neutral
 data companion to the
 [EdgeLoom toolchain](https://github.com/edgeloom-oss/edgeloom).
 
-> **Bootstrap status:** this repository is limited to repository scaffolding
-> and synthetic examples. It contains no real pilot catalog data or verified
-> mappings, and it does not publish a GitHub Pages site.
+> **Pilot status:** this repository contains a founder-seeded YRD156 lock pilot
+> with pinned SmartThings, zwave-js, and OCF-derived SDF references. Every real
+> mapping remains `candidate`: none has completed independent review or become
+> `verified`. The repository does not publish a GitHub Pages site.
 
 ## Project boundary
 
@@ -23,7 +24,7 @@ The catalog consumes contracts released by the core toolchain; it does not
 fork or redefine them locally. See [Repository layout](docs/repository-layout.md)
 for the intended data flow.
 
-## Validate the bootstrap
+## Validate the catalog
 
 CI runs EdgeLoom core from the exact commit recorded in
 [`CORE_REVISION`](CORE_REVISION) with the hash-locked Linux runtime in
@@ -39,7 +40,8 @@ python3.11 -m venv .venv
 PYTHON_BIN="$PWD/.venv/bin/python" ./scripts/validate-catalog.sh
 ```
 
-The final line should report two explicitly typed documents and no failures.
+For the current tree, the final line should report eight explicitly typed
+documents and no failures.
 The shared script also rejects unrecognized structured files, symbolic links,
 and documents over 1 MiB before invoking the pinned core contracts. It does not
 fetch or execute any artifact named by a source manifest. Cross-file digest and
@@ -71,6 +73,9 @@ Two independent axes prevent status from becoming an endorsement:
 Neither value is authenticated by schema validation alone. Review trust comes
 from the governed repository history. The precise meanings and promotion rules
 are documented in [Status and review](docs/status-and-review.md).
+
+The initial candidate findings, provenance inventory, and verification limits
+are summarized in the [YRD156 lock pilot](catalog/evidence/lock-pilot-2026-08.md).
 
 ## Contributing and reporting
 
