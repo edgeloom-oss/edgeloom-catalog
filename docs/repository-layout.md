@@ -12,6 +12,7 @@ records that conform to those contracts.
 ├── catalog/
 │   ├── sources/       # pinned source manifests
 │   ├── mappings/      # mapping sets
+│   ├── devices/       # explicit identity and feature navigation (draft contract)
 │   ├── evidence/      # repository-authored evidence records
 │   └── reviews/       # governed review records
 ├── examples/          # synthetic, non-production examples
@@ -24,8 +25,8 @@ The versioned schema definitions remain in the core repository. Catalog
 validation selects the explicit EdgeLoom revision in
 [`CORE_REVISION`](../CORE_REVISION) rather than copying and modifying those
 definitions here. The repository script supplies file-location, type, size, and
-symlink checks; it does not implement a schema or a cross-file semantic
-resolver.
+symlink checks; the pinned core owns schemas, cross-record reference/digest
+checks, fetch behavior and report rendering. No contract is redefined here.
 
 ## Record flow
 
@@ -33,10 +34,14 @@ resolver.
    ID, a repository-relative artifact path, and a SHA-256 digest.
 2. A mapping set cites those manifests and records relationships, evidence,
    semantic loss, uncertainty, and limitations.
-3. Independent review may advance the mapping through the lifecycle described
+3. A device entry associates explicit protocol identity and readable feature
+   questions with mapping-set IDs. Associations are declarations, not support.
+4. Independent review may advance the mapping through the lifecycle described
    in [Status and review](status-and-review.md).
-4. A future renderer may produce a static view from accepted records. Generated
-   output is not a second source of truth.
+5. The core renderer produces deterministic JSON, Markdown and static HTML,
+   including candidate records with their status and limitations visible.
+   Generated output is not a second source of truth. The homepage embeds a
+   commit-pinned snapshot; it does not query mutable upstream APIs in a browser.
 
 Paths in mapping records are resolved from the catalog repository root. They
 must not depend on a contributor's home directory, checkout location, branch

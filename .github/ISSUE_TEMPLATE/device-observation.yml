@@ -1,0 +1,59 @@
+name: Device observation or request
+description: Suggest a device or report where your driver differs from a catalog finding
+title: "[Device observation] "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You do not need to author a mapping to contribute. Please distinguish
+        what you observed from what you inferred. Do not post PINs, access codes,
+        tokens, private telemetry, household IDs, serial numbers, or unpatched
+        vulnerabilities. Use SECURITY.md for private vulnerability reporting.
+  - type: input
+    id: device
+    attributes:
+      label: Manufacturer, model and protocol
+      description: Public model and protocol identifiers only; no serial number or network/device identifier.
+    validations:
+      required: true
+  - type: input
+    id: driver
+    attributes:
+      label: Driver version, assigned profile and firmware (if known)
+      description: Prefer a public driver commit or package version. Unknown is acceptable.
+    validations:
+      required: true
+  - type: input
+    id: report
+    attributes:
+      label: Catalog report and revision (if relevant)
+      description: Link the feature report and its catalog commit, or say this device is not indexed.
+  - type: dropdown
+    id: observation-type
+    attributes:
+      label: What are you contributing?
+      options:
+        - A device or feature request (not a test)
+        - A source-artifact observation (no hardware test)
+        - An observation from my own device (not independently verified)
+        - A correction to a report's interpretation
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: Observation and reproduction steps
+      description: Describe the expected and actual behavior, conditions, and what remains unknown. Sanitize screenshots and logs.
+    validations:
+      required: true
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Safety and evidence boundaries
+      options:
+        - label: I removed credentials, PINs, access codes, household identifiers and private telemetry.
+          required: true
+        - label: I distinguish source inspection, actual device observation and uncertainty; I do not claim independent verification.
+          required: true

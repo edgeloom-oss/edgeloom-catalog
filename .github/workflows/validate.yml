@@ -51,3 +51,10 @@ jobs:
 
       - name: Validate local catalog contracts
         run: PYTHON_BIN="$(command -v python)" ./scripts/validate-catalog.sh
+
+      - name: Build twice and check deterministic output (no source fetch)
+        run: |
+          cd .edgeloom-core
+          python -m edgeloom.cli catalog build .. --output /tmp/catalog-first
+          python -m edgeloom.cli catalog build .. --output /tmp/catalog-second
+          diff -r /tmp/catalog-first /tmp/catalog-second

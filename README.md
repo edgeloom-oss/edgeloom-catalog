@@ -11,6 +11,20 @@ data companion to the
 > mapping remains `candidate`: none has completed independent review or become
 > `verified`. The repository does not publish a GitHub Pages site.
 
+## Inspect a device
+
+The first device entry groups **one Yale YRD156 model**, three feature mapping
+sets and six candidate assertions. Inspect
+[`catalog/devices/yale-yrd156.yaml`](catalog/devices/yale-yrd156.yaml) or follow
+the core's [five-minute walkthrough](https://github.com/edgeloom-oss/edgeloom/blob/codex/catalog-usable-evidence/docs/catalog-quickstart.md)
+to generate a searchable browser, shareable device page and Markdown report.
+No account, hub, AI key or physical lock is required.
+
+The browser/report tooling is a **development increment**, not part of the
+PyPI 0.2.0 package. Use the exact core pin below. A generated snapshot is
+prepared for the existing EdgeLoom homepage; publication still requires
+maintainer approval. This repository has no independent Pages deployment.
+
 ## Project boundary
 
 The two repositories have deliberately separate responsibilities:
@@ -20,7 +34,7 @@ The two repositories have deliberately separate responsibilities:
 | [`edgeloom`](https://github.com/edgeloom-oss/edgeloom) | Versioned schemas, validators, CLI behavior, adapters, renderers, and software releases |
 | `edgeloom-catalog` | Pinned source manifests, catalog-authored mapping assertions, evidence references, review records, and any future generated catalog view |
 
-The catalog consumes contracts released by the core toolchain; it does not
+The catalog consumes versioned contracts from an exact core pin; it does not
 fork or redefine them locally. See [Repository layout](docs/repository-layout.md)
 for the intended data flow.
 
@@ -40,13 +54,30 @@ python3.11 -m venv .venv
 PYTHON_BIN="$PWD/.venv/bin/python" ./scripts/validate-catalog.sh
 ```
 
-For the current tree, the final line should report eight explicitly typed
-documents and no failures.
+For the current tree, the checks should report nine explicitly typed documents
+and a successful offline join of three sources, three mapping sets and one
+device entry. Existing source/mapping contracts remain v0.1; the new
+`catalog-device` v0.1 navigation contract is explicitly draft.
 The shared script also rejects unrecognized structured files, symbolic links,
 and documents over 1 MiB before invoking the pinned core contracts. It does not
-fetch or execute any artifact named by a source manifest. Cross-file digest and
-artifact reference checks remain part of human review until the core toolchain
-adds a directory-level resolver.
+fetch or execute any artifact named by a source manifest. The pinned core also
+recomputes referenced manifest digests and checks artifact IDs, mapping IDs and
+device protocol associations. Passing checks never promotes a record's review
+lifecycle or authenticates device identity, interpretation or hardware behavior.
+
+For a platform-neutral local report after installing the pinned core:
+
+```bash
+edgeloom catalog check .
+edgeloom catalog build . --output _site
+# Optional explicit network step; cached third-party bytes are not committed:
+edgeloom catalog fetch . --cache .cache/source-bytes
+edgeloom catalog build . --cache .cache/source-bytes --output _site
+```
+
+CI builds twice without fetching upstream material and compares every output
+byte. Source-byte, locator, review and hardware-evidence states remain separate.
+Strict JSON pointers may resolve; selectors, Lua and JSON5 need manual review.
 
 ## What this catalog is not
 
@@ -87,6 +118,11 @@ Before proposing a source or mapping, read:
 - [Security](SECURITY.md) for private vulnerability reporting; and
 - [Licensing](docs/licensing.md) for upstream attribution and redistribution
   boundaries.
+
+For a device observation or request, use the
+[simple feedback form](https://github.com/edgeloom-oss/edgeloom-catalog/issues/new?template=device-observation.yml).
+You do not need to write a mapping. Never post PINs, access codes, credentials,
+private device/household identifiers, or private telemetry.
 
 Apache License 2.0 applies only to material authored for this repository.
 Third-party artifacts retain their own terms, which source manifests record

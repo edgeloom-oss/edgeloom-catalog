@@ -18,6 +18,8 @@ to the EdgeLoom CLI, schemas, or validators belong in the
   incomplete, stale, or no longer reproducible.
 - Use the **independent review** form to volunteer a review or record review
   evidence before proposing a lifecycle change.
+- Use the **device observation or request** form to report what your driver or
+  device does, or suggest a model. No mapping authoring is required.
 - Report vulnerabilities privately through [SECURITY.md](SECURITY.md), never
   in a public issue or pull request.
 
@@ -49,7 +51,8 @@ the gap. Do not manufacture provenance to make the record validate.
 
 Canonical YAML and JSON records must be no larger than 1 MiB each. Put source
 manifests in `catalog/sources/`, mapping sets in `catalog/mappings/`, and
-evidence records in `catalog/evidence/`; CI forces the corresponding schema for
+device entries in `catalog/devices/`, and evidence records in `catalog/evidence/`;
+CI forces the corresponding schema for
 every structured file in those locations. `catalog/reviews/` remains
 Markdown-only until the core project publishes a standalone review-record
 contract.
