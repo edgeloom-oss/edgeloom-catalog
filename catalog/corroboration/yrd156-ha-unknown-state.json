@@ -1,0 +1,87 @@
+{
+  "kind": "catalog-corroboration",
+  "schema_version": "0.1",
+  "id": "yrd156-ha-unknown-state",
+  "device_id": "yale-yrd156",
+  "feature_id": "lock-state",
+  "title": "Keep unknown state separate",
+  "summary": "HA's generic lock path retains an unknown result. Its simulated missing-value test is useful implementation context, but does not validate the YRD156 candidate mapping or its SmartThings migration condition.",
+  "source_manifests": [
+    {
+      "id": "ha-zwave-lock-067f882",
+      "path": "catalog/sources/ha-zwave-lock-067f882.json",
+      "sha256": "1caaa16559465dee408eb216185ea6ed590dc1f7938729a4e68d405e023a8c25"
+    },
+    {
+      "id": "zwave-js-yrd156-c4c599e",
+      "path": "catalog/sources/zwave-js-yrd156-c4c599e.yaml",
+      "sha256": "72d981b9af12b3d525a45bb0f5dc37941bab918287ac327294e5ac87c97790de"
+    }
+  ],
+  "lineage": [
+    {
+      "manifest_id": "zwave-js-yrd156-c4c599e",
+      "family": "zwave-js-stack",
+      "depends_on": []
+    },
+    {
+      "manifest_id": "ha-zwave-lock-067f882",
+      "family": "zwave-js-stack",
+      "depends_on": [
+        "zwave-js-yrd156-c4c599e"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "ha-unknown-state",
+      "platform": "Home Assistant · Z-Wave JS",
+      "scope": "platform-generic",
+      "evidence_kind": "code-declaration",
+      "relationship": "context",
+      "claim": "ZWaveLock.is_locked returns None for a missing primary value or DoorLockMode.UNKNOWN, instead of treating it as unlocked.",
+      "references": [
+        {
+          "manifest_id": "ha-zwave-lock-067f882",
+          "artifact_id": "ha-zwave-lock",
+          "locator": "ZWaveLock.is_locked"
+        }
+      ],
+      "conditions": [
+        "Generic entity code; no YRD156-specific node capture is present.",
+        "The underlying Z-Wave JS stack supplies command-class values."
+      ]
+    },
+    {
+      "id": "ha-missing-value-test",
+      "platform": "Home Assistant · simulated test",
+      "scope": "platform-generic",
+      "evidence_kind": "test-fixture",
+      "relationship": "context",
+      "claim": "test_door_lock_no_value replaces a Schlage BE469 fixture's mode value with None and asserts STATE_UNKNOWN.",
+      "references": [
+        {
+          "manifest_id": "ha-zwave-lock-067f882",
+          "artifact_id": "ha-zwave-test-lock",
+          "locator": "test_door_lock_no_value"
+        }
+      ],
+      "conditions": [
+        "This is a Schlage fixture, not a YRD156 hardware test.",
+        "The upstream test was inspected, not executed by EdgeLoom; repository CI is not inherited as a per-device pass."
+      ]
+    }
+  ],
+  "review": {
+    "lifecycle": "candidate",
+    "author": "github:@infinitywings",
+    "reviewers": []
+  },
+  "limitations": [
+    "Human-authored candidate observations; no independent EdgeLoom review or physical-device test.",
+    "Sources are pinned snapshots, not a claim about the currently installed integration, coordinator or firmware.",
+    "Relationship labels are curator interpretations, not computed semantic equivalence. Conflicting observations must remain visible.",
+    "This record does not broaden the existing locked/unlocked SDF subset or establish a reversible mapping.",
+    "Existing SmartThings SLGA_MIGRATED uncertainty and all original mapping limits remain unchanged."
+  ]
+}

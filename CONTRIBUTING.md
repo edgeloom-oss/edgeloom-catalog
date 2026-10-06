@@ -20,6 +20,9 @@ to the EdgeLoom CLI, schemas, or validators belong in the
   evidence before proposing a lifecycle change.
 - Use the **device observation or request** form to report what your driver or
   device does, or suggest a model. No mapping authoring is required.
+- A source-only comparison can be a candidate
+  [corroboration sidecar](catalog/corroboration/README.md), not an independent
+  review. Use the correction/observation form to suggest one.
 - Report vulnerabilities privately through [SECURITY.md](SECURITY.md), never
   in a public issue or pull request.
 
@@ -51,7 +54,8 @@ the gap. Do not manufacture provenance to make the record validate.
 
 Canonical YAML and JSON records must be no larger than 1 MiB each. Put source
 manifests in `catalog/sources/`, mapping sets in `catalog/mappings/`, and
-device entries in `catalog/devices/`, and evidence records in `catalog/evidence/`;
+device entries in `catalog/devices/`, external comparisons in
+`catalog/corroboration/`, and evidence records in `catalog/evidence/`;
 CI forces the corresponding schema for
 every structured file in those locations. `catalog/reviews/` remains
 Markdown-only until the core project publishes a standalone review-record
@@ -73,6 +77,11 @@ schema checks means only that a record is structurally valid.
 Do not set `verified` merely because CI passes, an upstream artifact calls
 itself official, or a maintainer authored the record. See
 [GOVERNANCE.md](GOVERNANCE.md) for the decision process.
+
+The new draft corroboration sidecar is candidate-only and accepts no reviewer
+credits. Preserve contradictory observations, partial identity match fields
+and source lineage. Do not call a generic action a model-specific success,
+a fixture a physical test, or multiple dependent repos independent review.
 
 ## Third-party material
 

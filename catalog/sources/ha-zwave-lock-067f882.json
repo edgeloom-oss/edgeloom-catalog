@@ -1,0 +1,69 @@
+{
+  "kind": "source-manifest",
+  "schema_version": "0.1",
+  "id": "ha-zwave-lock-067f882",
+  "ecosystem": "home-assistant",
+  "description": "Generic Home Assistant Z-Wave JS exposure paths and simulated tests. No YRD156-specific hardware validation; the underlying device metadata comes from the Z-Wave JS stack.",
+  "repository": {
+    "url": "https://github.com/home-assistant/core",
+    "commit": "067f88281665776424fbb4826697c46d5e7a6837"
+  },
+  "artifacts": [
+    {
+      "id": "ha-zwave-lock",
+      "path": "homeassistant/components/zwave_js/lock.py",
+      "sha256": "0ab02d31057ee1f1620318375138131835e1a637c23934f44e02772f4d80c505",
+      "media_type": "text/x-python",
+      "description": "Lock entity and generic configuration implementation.",
+      "layer": "platform-exposure",
+      "artifact_role": "evidence",
+      "source_maturity": "official",
+      "license": {
+        "expression": "Apache-2.0",
+        "evidence_path": "LICENSE.md"
+      }
+    },
+    {
+      "id": "ha-zwave-services",
+      "path": "homeassistant/components/zwave_js/services.yaml",
+      "sha256": "1f36ce2ac6a80e9042015a0f670456425e41fcb7aff0383544fab6713b8667d0",
+      "media_type": "application/yaml",
+      "description": "Service field declarations, including configuration parameter writes.",
+      "layer": "platform-exposure",
+      "artifact_role": "evidence",
+      "source_maturity": "official",
+      "license": {
+        "expression": "Apache-2.0",
+        "evidence_path": "LICENSE.md"
+      }
+    },
+    {
+      "id": "ha-zwave-test-lock",
+      "path": "tests/components/zwave_js/test_lock.py",
+      "sha256": "7ced0e7439967e73a096801d65a3bf702bf186c04c6c06d5fc8e42d24bd944c6",
+      "media_type": "text/x-python",
+      "description": "Upstream simulated lock tests; not executed here or associated with YRD156 hardware.",
+      "layer": "platform-exposure",
+      "artifact_role": "evidence",
+      "source_maturity": "official",
+      "license": {
+        "expression": "Apache-2.0",
+        "evidence_path": "LICENSE.md"
+      }
+    },
+    {
+      "id": "ha-license",
+      "path": "LICENSE.md",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "media_type": "text/plain",
+      "description": "Pinned upstream license text.",
+      "layer": "platform-exposure",
+      "artifact_role": "evidence",
+      "source_maturity": "official",
+      "license": {
+        "expression": "Apache-2.0",
+        "evidence_path": "LICENSE.md"
+      }
+    }
+  ]
+}
