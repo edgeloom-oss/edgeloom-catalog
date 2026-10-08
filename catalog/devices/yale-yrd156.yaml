@@ -1,0 +1,62 @@
+kind: catalog-device
+schema_version: "0.1"
+id: yale-yrd156
+manufacturer: Yale
+model: YRD156
+protocol: zwave
+identifiers:
+  manufacturer_id: "0x0129"
+  product_type: "0x803A"
+  product_id: "0x0508"
+identity_evidence:
+  manifest_id: smartthings-zwave-lock-6b8a9cf
+  artifact_id: smartthings-zwave-lock-fingerprints
+  locator: zwaveManufacturer[id=Yale/YRD156]
+firmware: Unknown; no real-unit firmware or SLGA_MIGRATED state recorded
+hardware_evidence: []
+features:
+  - id: auto-relock
+    title: Auto-relock duration
+    summary: >-
+      The pinned community configuration describes a duration parameter. It is
+      absent from the examined base-lock capability list and the selected
+      lock-status SDF object. This does not establish that the whole driver or
+      SmartThings UI lacks a setting, or that SDF cannot express one.
+    mapping_ids:
+      - smartthings-yrd156-auto-relock-gap
+    next_steps:
+      - Compare your exact driver version and assigned profile with these pinned files.
+      - Inspect preferences, handlers and subdrivers before concluding the setting is unavailable.
+      - Report a difference without including private device identifiers or access codes.
+  - id: lock-state
+    title: Lock-state events
+    summary: >-
+      A strict locked/unlocked subset has a candidate correspondence with the
+      selected SDF property. Unknown state and method/user metadata are not
+      preserved. The examined handler path requires a true migration flag;
+      that state has not been established for a real YRD156.
+    mapping_ids:
+      - smartthings-yrd156-lock-state
+    next_steps:
+      - Establish the active handler path and migration condition before applying this finding.
+      - Keep unknown state and event metadata explicit rather than reducing them to a binary value.
+      - Request review of this bounded correspondence; no complete translator is provided here.
+  - id: access-identities
+    title: Access identity and lock codes
+    summary: >-
+      The examined migrated path carries user and credential metadata absent
+      from the selected lock-code SDF object. A PIN write payload and the
+      reported identity records do not establish a reversible value mapping.
+    mapping_ids:
+      - smartthings-yrd156-access-identities
+    next_steps:
+      - Review identity, authorization and privacy requirements before proposing a mapping.
+      - Treat write payloads and read/event metadata as different interfaces.
+      - Never submit real PINs, lock codes, credential values or household identifiers.
+limitations:
+  - One device model is indexed; the three feature records are not three supported devices.
+  - All associated mappings are founder-authored candidates without independent review.
+  - No physical YRD156 or SmartThings hub has been tested for these records.
+  - Published source artifacts do not prove behavior of your installed driver or firmware.
+  - No installation instruction or automated Z-Wave patch is offered for this case.
+  - Community configuration is not manufacturer authority; hosted SDF models are not adoption evidence.

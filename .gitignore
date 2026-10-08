@@ -2,3 +2,5 @@
 .edgeloom-core/
 .venv/
 __pycache__/
+.cache/
+_site/

@@ -65,6 +65,9 @@ while IFS= read -r -d '' document; do
     catalog/mappings/*)
       validate_file "$document" catalog-mapping-set
       ;;
+    catalog/devices/*)
+      validate_file "$document" catalog-device
+      ;;
     catalog/evidence/*)
       validate_file "$document" evidence-record
       ;;
@@ -83,3 +86,7 @@ fi
 # Validation reads only this checkout. It does not fetch or execute any
 # repository or driver declared by a source manifest.
 printf 'Validated %d explicitly typed contract document(s).\n' "$checked"
+(
+  cd "$core_dir"
+  "$python_bin" -m edgeloom.cli catalog check "$repo_root"
+)
