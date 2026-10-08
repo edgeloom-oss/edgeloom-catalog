@@ -1,0 +1,131 @@
+{
+  "kind": "catalog-corroboration",
+  "schema_version": "0.1",
+  "id": "yrd156-ha-configuration-path",
+  "device_id": "yale-yrd156",
+  "feature_id": "auto-relock",
+  "title": "Configuration parameter versus lock configuration",
+  "summary": "The model-specific community configuration and HA's generic actions describe different interfaces. A configuration-parameter write must not be equated with Door Lock CC auto_relock_time.",
+  "source_manifests": [
+    {
+      "id": "zwave-js-yrd156-c4c599e",
+      "path": "catalog/sources/zwave-js-yrd156-c4c599e.yaml",
+      "sha256": "72d981b9af12b3d525a45bb0f5dc37941bab918287ac327294e5ac87c97790de"
+    },
+    {
+      "id": "ha-zwave-lock-067f882",
+      "path": "catalog/sources/ha-zwave-lock-067f882.json",
+      "sha256": "1caaa16559465dee408eb216185ea6ed590dc1f7938729a4e68d405e023a8c25"
+    }
+  ],
+  "lineage": [
+    {
+      "manifest_id": "zwave-js-yrd156-c4c599e",
+      "family": "zwave-js-stack",
+      "depends_on": []
+    },
+    {
+      "manifest_id": "ha-zwave-lock-067f882",
+      "family": "zwave-js-stack",
+      "depends_on": [
+        "zwave-js-yrd156-c4c599e"
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "id": "zwjs-parameter",
+      "platform": "Z-Wave JS configuration",
+      "scope": "device-model",
+      "evidence_kind": "code-declaration",
+      "relationship": "supports",
+      "claim": "The YRD156 configuration imports parameter 3's auto-relock duration definition: seconds, 0–180, default 30. Parameter 2 separately enables auto-relock.",
+      "identity_match": {
+        "manufacturer_id": "0x0129",
+        "product_type": "0x803A",
+        "product_id": "0x0508"
+      },
+      "identity_evidence": {
+        "manifest_id": "zwave-js-yrd156-c4c599e",
+        "artifact_id": "zwave-js-yrd156-config",
+        "locator": "/devices/0"
+      },
+      "references": [
+        {
+          "manifest_id": "zwave-js-yrd156-c4c599e",
+          "artifact_id": "zwave-js-yrd156-config",
+          "locator": "/paramInformation"
+        },
+        {
+          "manifest_id": "zwave-js-yrd156-c4c599e",
+          "artifact_id": "zwave-js-yale-template",
+          "locator": "auto_relock_time_180; auto_relock"
+        },
+        {
+          "manifest_id": "zwave-js-yrd156-c4c599e",
+          "artifact_id": "zwave-js-master-template",
+          "locator": "base_0-180_nounit"
+        }
+      ],
+      "conditions": [
+        "Community configuration only; parameter availability and enable/disable semantics need firmware-specific confirmation.",
+        "The chosen tuple is not interchangeable with every Yale model or protocol variant."
+      ]
+    },
+    {
+      "id": "ha-configuration-action",
+      "platform": "Home Assistant · Z-Wave JS",
+      "scope": "platform-generic",
+      "evidence_kind": "code-declaration",
+      "relationship": "context",
+      "claim": "set_config_parameter declares parameter, value, endpoint and optional value_size fields. This is a generic entry point for configuration parameters, not a YRD156-specific successful write.",
+      "references": [
+        {
+          "manifest_id": "ha-zwave-lock-067f882",
+          "artifact_id": "ha-zwave-services",
+          "locator": "/set_config_parameter/fields"
+        }
+      ],
+      "conditions": [
+        "Requires the relevant runtime node metadata, permissions and supported parameter.",
+        "The pinned catalog Z-Wave JS config is a comparison baseline, not a claim that HA deploys exactly that revision."
+      ]
+    },
+    {
+      "id": "ha-doorlock-configuration",
+      "platform": "Home Assistant · Door Lock CC",
+      "scope": "platform-generic",
+      "evidence_kind": "code-declaration",
+      "relationship": "unresolved",
+      "claim": "async_set_lock_configuration passes auto_relock_time to DoorLockCCConfigurationSetOptions. This protocol-level option is not proof of equivalence to Yale's configuration parameter 3.",
+      "references": [
+        {
+          "manifest_id": "ha-zwave-lock-067f882",
+          "artifact_id": "ha-zwave-lock",
+          "locator": "ZWaveLock.async_set_lock_configuration; DoorLockCCConfigurationSetOptions"
+        },
+        {
+          "manifest_id": "ha-zwave-lock-067f882",
+          "artifact_id": "ha-zwave-services",
+          "locator": "/set_lock_configuration/fields/auto_relock_time"
+        }
+      ],
+      "conditions": [
+        "Device command-class version and actual supported options are unknown for this case.",
+        "No operational instructions, write payloads or safe setting recommendation are provided."
+      ]
+    }
+  ],
+  "review": {
+    "lifecycle": "candidate",
+    "author": "github:@infinitywings",
+    "reviewers": []
+  },
+  "limitations": [
+    "Human-authored candidate observations; no independent EdgeLoom review or physical-device test.",
+    "Sources are pinned snapshots, not a claim about the currently installed integration, coordinator or firmware.",
+    "Relationship labels are curator interpretations, not computed semantic equivalence. Conflicting observations must remain visible.",
+    "HA and Z-Wave JS share a backend lineage; they are not two independent attestations of the device's behavior.",
+    "The lineage edge records shared stack ancestry, not an exact runtime dependency/version lock."
+  ]
+}

@@ -7,16 +7,19 @@ data companion to the
 [EdgeLoom toolchain](https://github.com/edgeloom-oss/edgeloom).
 
 > **Pilot status:** this repository contains a founder-seeded YRD156 lock pilot
-> with pinned SmartThings, zwave-js, and OCF-derived SDF references. Every real
+> with pinned SmartThings, zwave-js, and OCF-derived SDF references. This review
+> branch adds HA context and a YRD210 Zigbee comparison from ZHA/Zigbee2MQTT. Every real
 > mapping remains `candidate`: none has completed independent review or become
 > `verified`. The repository does not publish a GitHub Pages site.
 
 ## Inspect a device
 
-The first device entry groups **one Yale YRD156 model**, three feature mapping
-sets and six candidate assertions. Inspect
-[`catalog/devices/yale-yrd156.yaml`](catalog/devices/yale-yrd156.yaml) or follow
-the core's [five-minute walkthrough](https://github.com/edgeloom-oss/edgeloom/blob/codex/catalog-usable-evidence/docs/catalog-quickstart.md)
+This review branch indexes **two explicit device identities**, three feature
+mapping sets, six mapping assertions and four external-corroboration records
+(nine source observations). These are inventory counts, not supported-device
+counts. Inspect [YRD156](catalog/devices/yale-yrd156.yaml) or
+[YRD210 PB DB (Zigbee)](catalog/devices/yale-yrd210-pb-db.json), or follow
+the core's [five-minute walkthrough](https://github.com/edgeloom-oss/edgeloom/blob/codex/catalog-external-evidence/docs/catalog-quickstart.md)
 to generate a searchable browser, shareable device page and Markdown report.
 No account, hub, AI key or physical lock is required.
 
@@ -54,10 +57,11 @@ python3.11 -m venv .venv
 PYTHON_BIN="$PWD/.venv/bin/python" ./scripts/validate-catalog.sh
 ```
 
-For the current tree, the checks should report nine explicitly typed documents
-and a successful offline join of three sources, three mapping sets and one
-device entry. Existing source/mapping contracts remain v0.1; the new
-`catalog-device` v0.1 navigation contract is explicitly draft.
+For the current tree, the checks should report 17 explicitly typed documents
+and a successful offline join of six sources, three mapping sets, two device
+entries and four corroboration records. Existing source/mapping contracts
+remain v0.1; the `catalog-device` and candidate-only `catalog-corroboration`
+v0.1 contracts are explicitly draft.
 The shared script also rejects unrecognized structured files, symbolic links,
 and documents over 1 MiB before invoking the pinned core contracts. It does not
 fetch or execute any artifact named by a source manifest. The pinned core also
@@ -78,6 +82,20 @@ edgeloom catalog build . --cache .cache/source-bytes --output _site
 CI builds twice without fetching upstream material and compares every output
 byte. Source-byte, locator, review and hardware-evidence states remain separate.
 Strict JSON pointers may resolve; selectors, Lua and JSON5 need manual review.
+
+## Compare without borrowing review
+
+[External corroboration](catalog/corroboration/README.md) compares declarations
+with pinned evidence, scoped identity matches, conditions and declared lineage.
+HA's Z-Wave JS path is not an independent device authority. ZHA quirk matching
+needs a full signature; the chosen Z2M definition matches only a model string.
+Code, simulated fixtures and human review are separate evidence types. Neither
+multiple sources nor an upstream CI pass promotes a candidate.
+
+The [first comparison slice](catalog/evidence/cross-source-locks-2026-10.md)
+keeps battery adaptation layers and command versus observed lock-state fields
+visible. No new SDF binding, hardware validation, Homebridge adapter or AI
+ingestion is claimed.
 
 ## What this catalog is not
 

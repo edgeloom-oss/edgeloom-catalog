@@ -24,6 +24,8 @@ features:
       SmartThings UI lacks a setting, or that SDF cannot express one.
     mapping_ids:
       - smartthings-yrd156-auto-relock-gap
+    corroboration_ids:
+      - yrd156-ha-configuration-path
     next_steps:
       - Compare your exact driver version and assigned profile with these pinned files.
       - Inspect preferences, handlers and subdrivers before concluding the setting is unavailable.
@@ -37,6 +39,8 @@ features:
       that state has not been established for a real YRD156.
     mapping_ids:
       - smartthings-yrd156-lock-state
+    corroboration_ids:
+      - yrd156-ha-unknown-state
     next_steps:
       - Establish the active handler path and migration condition before applying this finding.
       - Keep unknown state and event metadata explicit rather than reducing them to a binary value.
@@ -54,7 +58,7 @@ features:
       - Treat write payloads and read/event metadata as different interfaces.
       - Never submit real PINs, lock codes, credential values or household identifiers.
 limitations:
-  - One device model is indexed; the three feature records are not three supported devices.
+  - The three original mapping records describe this one device, not three supported devices.
   - All associated mappings are founder-authored candidates without independent review.
   - No physical YRD156 or SmartThings hub has been tested for these records.
   - Published source artifacts do not prove behavior of your installed driver or firmware.

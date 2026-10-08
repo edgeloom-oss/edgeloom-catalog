@@ -13,6 +13,7 @@ records that conform to those contracts.
 │   ├── sources/       # pinned source manifests
 │   ├── mappings/      # mapping sets
 │   ├── devices/       # explicit identity and feature navigation (draft contract)
+│   ├── corroboration/ # candidate cross-source observations and declared lineage
 │   ├── evidence/      # repository-authored evidence records
 │   └── reviews/       # governed review records
 ├── examples/          # synthetic, non-production examples
