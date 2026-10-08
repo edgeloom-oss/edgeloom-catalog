@@ -14,6 +14,9 @@ records that conform to those contracts.
 │   ├── mappings/      # mapping sets
 │   ├── devices/       # explicit identity and feature navigation (draft contract)
 │   ├── corroboration/ # candidate cross-source observations and declared lineage
+│   ├── documents/     # manual/web citations, applicability and capture metadata
+│   ├── observations/  # actually reported executions, separate from test plans
+│   ├── bundles/       # versioned record closure, explanations, gaps and credits
 │   ├── evidence/      # repository-authored evidence records
 │   └── reviews/       # governed review records
 ├── examples/          # synthetic, non-production examples
@@ -36,13 +39,22 @@ checks, fetch behavior and report rendering. No contract is redefined here.
 2. A mapping set cites those manifests and records relationships, evidence,
    semantic loss, uncertainty, and limitations.
 3. A device entry associates explicit protocol identity and readable feature
-   questions with mapping-set IDs. Associations are declarations, not support.
+   questions with mapping or corroboration IDs. Associations are declarations,
+   not support.
 4. Independent review may advance the mapping through the lifecycle described
    in [Status and review](status-and-review.md).
 5. The core renderer produces deterministic JSON, Markdown and static HTML,
    including candidate records with their status and limitations visible.
    Generated output is not a second source of truth. The homepage embeds a
    commit-pinned snapshot; it does not query mutable upstream APIs in a browser.
+
+The draft bundle path is additive: a document or observation can be contributed
+without creating a mapping. A bundle groups records by feature, cites their
+exact paths and digests, explains implementation decisions and preserves test
+plans, missing evidence and scoped reviews. Closure includes references made by
+the selected records. Core checks and generates the portable reports; catalog
+contributors author the evidence and metadata. See
+[bundle contributions](bundle-contributions.md).
 
 Paths in mapping records are resolved from the catalog repository root. They
 must not depend on a contributor's home directory, checkout location, branch
@@ -56,7 +68,8 @@ case requires storing third-party bytes, redistribution authority and
 attribution must be documented before those bytes enter the repository. See
 [Licensing](licensing.md).
 
-The catalog now includes a bounded founder-seeded YRD156 candidate pilot in
-addition to synthetic examples. No real mapping has completed independent
-review or become verified, and an independent Pages site remains outside the
-current repository contents.
+The catalog includes bounded founder-seeded YRD156 and YRD210 candidate cases
+and the draft YRD210 battery bundle, alongside synthetic examples. No real
+mapping has completed independent review or become verified. No hardware
+observation record is present. The public browser is hosted by core's existing
+homepage deployment; this repository has no independent Pages site.

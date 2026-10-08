@@ -4,3 +4,6 @@
 __pycache__/
 .cache/
 _site/
+_bundle/
+_bundle-preview/
+yale-yrd210-battery.zip

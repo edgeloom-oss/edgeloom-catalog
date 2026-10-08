@@ -12,10 +12,28 @@ body:
         security process instead.
 
   - type: input
+    id: bundle
+    attributes:
+      label: Bundle ID or link (if relevant)
+      placeholder: yale-yrd210-battery
+
+  - type: input
+    id: version
+    attributes:
+      label: Bundle version (if relevant)
+      placeholder: 0.1.0
+
+  - type: input
+    id: feature
+    attributes:
+      label: Feature ID (if relevant)
+      placeholder: battery
+
+  - type: input
     id: record
     attributes:
       label: Affected record and exact catalog revision
-      description: Provide the mapping/source ID, path, and commit or permanent link.
+      description: Provide the document, observation, mapping, source or bundle ID, path, and commit or permanent link. Include the record digest if available.
     validations:
       required: true
 
@@ -32,6 +50,9 @@ body:
         - Source maturity or review lifecycle
         - License evidence or third-party notice
         - Limitation or scope
+        - Document applicability or version
+        - Observation environment, result or evidence
+        - Implementation explanation or bundle reference
         - Deprecation or replacement
         - Other data-quality issue
     validations:
@@ -65,7 +86,7 @@ body:
     id: impact
     attributes:
       label: Downstream impact
-      description: Identify affected mappings, generated views, or consumers, and whether urgent containment is needed.
+      description: Identify affected features, bundle versions, mappings, generated views or consumers, including any review whose scope no longer holds.
     validations:
       required: true
 

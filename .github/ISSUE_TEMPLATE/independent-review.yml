@@ -1,5 +1,5 @@
-name: Independent mapping review
-description: Volunteer or record a substantive review of an exact candidate mapping revision
+name: Independent record or bundle review
+description: Review a stated scope against exact catalog record revisions
 title: "[Review] "
 labels: []
 assignees: []
@@ -10,12 +10,32 @@ body:
         Review an exact catalog revision. Schema validity alone is not review.
         A verified lifecycle additionally requires a governed maintainer
         decision and stable `decision_ref`.
+        Draft bundles and observations remain candidate even after a scoped
+        review. Describe exactly what you checked and what remains untested.
+
+  - type: input
+    id: bundle
+    attributes:
+      label: Bundle ID or link (if relevant)
+      placeholder: yale-yrd210-battery
+
+  - type: input
+    id: version
+    attributes:
+      label: Bundle version (if relevant)
+      placeholder: 0.1.0
+
+  - type: input
+    id: feature
+    attributes:
+      label: Feature ID (if relevant)
+      placeholder: battery
 
   - type: input
     id: mapping
     attributes:
-      label: Mapping-set ID and exact revision
-      description: Provide the path and commit or permanent pull-request link to the bytes reviewed.
+      label: Record IDs and exact revisions reviewed
+      description: Provide paths, SHA-256 digests and commit or permanent pull-request links. For a bundle, identify the constituent records covered by your review.
     validations:
       required: true
 
@@ -23,7 +43,7 @@ body:
     id: reviewer-id
     attributes:
       label: Reviewer identifier
-      description: Use the stable public actor identifier to be recorded in the mapping set.
+      description: Use the stable public actor identifier to be recorded with the review.
       placeholder: github:@reviewer
     validations:
       required: true
@@ -55,8 +75,8 @@ body:
   - type: textarea
     id: findings
     attributes:
-      label: Mapping findings
-      description: Assess layers, classifications, directions, loss dimensions, unbound reasons, limitations, license evidence, and source maturity.
+      label: Review findings
+      description: Assess the statements within your scope, such as document applicability, implementation reasoning, observation reproducibility or mapping semantics. Identify claims you could not check.
     validations:
       required: true
 
@@ -66,8 +86,9 @@ body:
       label: Recommendation
       options:
         - Keep as candidate; changes required
-        - Accept as reviewed within the stated scope
-        - Eligible for a separate governed verified decision
+        - Accept the stated review scope; draft bundle and observations remain candidate
+        - Mapping only - accept as reviewed within the stated scope
+        - Mapping only - eligible for a separate governed verified decision
         - Deprecate or replace
     validations:
       required: true
@@ -85,7 +106,7 @@ body:
     attributes:
       label: Review attestation
       options:
-        - label: I did not author the reviewed mapping set and have disclosed material relationships that could affect my independence.
+        - label: I did not author the reviewed records and have disclosed material relationships that could affect my independence.
           required: true
         - label: I reviewed the exact revision named above, not only a summary or rendered page.
           required: true

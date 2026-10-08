@@ -71,6 +71,15 @@ while IFS= read -r -d '' document; do
     catalog/corroboration/*)
       validate_file "$document" catalog-corroboration
       ;;
+    catalog/documents/*)
+      validate_file "$document" document-source
+      ;;
+    catalog/observations/*)
+      validate_file "$document" catalog-observation
+      ;;
+    catalog/bundles/*)
+      validate_file "$document" device-evidence-bundle
+      ;;
     catalog/evidence/*)
       validate_file "$document" evidence-record
       ;;
