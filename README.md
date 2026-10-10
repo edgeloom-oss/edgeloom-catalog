@@ -14,11 +14,12 @@ data companion to the
 
 ## Inspect a device
 
-The catalog indexes **two explicit device identities**, three feature
+The catalog indexes **two explicit device identities and one integration family**, three feature
 mapping sets, six mapping assertions and four external-corroboration records
 (nine source observations). These are inventory counts, not supported-device
 counts. Inspect [YRD156](catalog/devices/yale-yrd156.yaml) or
-[YRD210 PB DB (Zigbee)](catalog/devices/yale-yrd210-pb-db.json), or follow
+[YRD210 PB DB (Zigbee)](catalog/devices/yale-yrd210-pb-db.json), and the
+[LG webOS family case](docs/media-case-intake.md), or follow
 the core's [five-minute walkthrough](https://github.com/edgeloom-oss/edgeloom/blob/main/docs/catalog-quickstart.md)
 to generate a searchable browser, shareable device page and Markdown report.
 No account, hub, AI key or physical lock is required.
@@ -74,13 +75,14 @@ python3.11 -m venv .venv
 PYTHON_BIN="$PWD/.venv/bin/python" ./scripts/validate-catalog.sh
 ```
 
-The checks validate explicitly typed records and join the six Git sources,
-three mapping sets, two device entries and four corroboration records offline.
+The checks validate explicitly typed records and join the seven Git sources,
+three mapping sets, three device/family entries and four corroboration records offline.
 They also validate document, observation and bundle records under the new draft
-contracts. The first bundle cites six records, including one official document
-record; no observation record has been added. Existing source/mapping contracts
-remain v0.1. The device, corroboration, document, observation and bundle v0.1
-contracts are explicitly draft.
+contracts. The Yale bundle cites six records, including one official document
+record; the LG family bundle cites three records and keeps exact-model and
+hardware gaps explicit. No observation record has been added. Existing
+source/mapping contracts remain v0.1. Device/bundle v0.2 adds opt-in family/API
+context; the earlier draft contracts remain supported and unchanged.
 The shared script also rejects unrecognized structured files, symbolic links,
 and documents over 1 MiB before invoking the pinned core contracts. It does not
 fetch or execute any artifact named by a source manifest. The pinned core also

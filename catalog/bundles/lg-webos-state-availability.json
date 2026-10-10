@@ -197,7 +197,7 @@
     }
   ],
   "limitations": [
-    "Private review candidate; schema extension is not yet accepted or released. Canonical data and published Pages remain unchanged.",
+    "Source-only candidate under draft schema 0.2. Repository acceptance or snapshot publication does not confer independent review, hardware validation or a packaged software release.",
     "Original metadata and explanations prepared with Codex assistance under the founder's direction; no independent community review.",
     "Upstream Home Assistant contributors retain attribution through repository, commit, artifact and license links. No upstream endorsement or additional contributor review credit is claimed.",
     "Only metadata and original explanations are packaged; upstream source files and documentation are not redistributed.",

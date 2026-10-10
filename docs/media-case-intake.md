@@ -1,6 +1,6 @@
-# LG webOS state case — private review branch
+# LG webOS state case — source-only candidate
 
-This branch adds one integration-family candidate, not a supported-device list
+This case adds one integration-family candidate, not a supported-device list
 or a test of the founder's television. It contains:
 
 - `catalog/devices/lg-webos-tv-family.json`: explicit family scope, source-declared
@@ -18,13 +18,12 @@ but the coordinator also has a recovery timer. No wire-level trace or client
 dependency execution was performed. The Home Assistant source and documentation
 are related publisher evidence, not independent corroboration.
 
-## Reproduce after reviewing the proposed core revision
+## Reproduce with the pinned core revision
 
-This draft requires the corresponding unpublished core branch. `CORE_REVISION`
-is pinned to local implementation commit `8ef52b7c7ff4c664e44cf30d47077e01908f14d0`. That commit must become
-publicly accessible through a separately approved push/review before normal
-remote catalog CI or another contributor can reproduce it by fetching GitHub.
-Do not merge this catalog increment against the old core pin.
+This draft requires the development revision selected in `CORE_REVISION`,
+`d7e801d10f02b6effe4d8403ec997913bfd7bb2c`, including the mobile-safe renderer.
+Use that exact commit, not the PyPI 0.2.0 package. Its history must remain
+reachable when integrating the corresponding core and catalog PRs.
 
 From the reviewed core checkout:
 
@@ -56,7 +55,9 @@ do not list them as EdgeLoom reviewers without an actual scoped review.
 
 ## Publication gate
 
-Draft schema review, coordinated core availability, catalog CI and PI approval
-precede any merge, hosting update, public issue or outreach. Existing Yale data
+Coordinated core availability, catalog CI and explicit maintainer approval
+precede merge and snapshot publication; software releases and outreach remain
+separate decisions. The schema remains draft and this evidence remains candidate.
+Existing Yale data
 and previously frozen packages remain unchanged. New records are AI-assisted,
 founder-directed curation, not independent community participation.
