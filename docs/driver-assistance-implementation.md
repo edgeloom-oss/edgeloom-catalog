@@ -1,6 +1,6 @@
 # Reusable driver artifacts implementation plan
 
-Status: design draft, 9 October 2026, America/New_York. The PI approved
+Status: design draft; integration baseline updated 10 October 2026. The PI approved
 SmartThings Edge-first driver assistance and requested coordinated planning.
 This document changes no record, core pin, runtime behavior or publication state.
 
@@ -8,17 +8,23 @@ The catalog will supply reusable implementation knowledge to EdgeLoom's
 Find → Customize → Contribute workflow. Core owns the contracts, matching,
 generators, checks and rendering. This repository owns source-grounded records,
 declarative recipes, evidence, reviews and attribution. The companion design is
-`docs/driver-assistance-architecture.md` in the EdgeLoom core checkout; it is a
-local review draft until an approved PR publishes it.
+[driver-assistance architecture](https://github.com/edgeloom-oss/edgeloom/blob/main/docs/driver-assistance-architecture.md)
+in EdgeLoom core. Publishing the design does not implement its proposed commands.
 
 ## Baseline
 
-Public main `2b391fa38650fab178f19327d288818baf2adccf` contains the Yale bundle.
-The local media branch at `12afc3326336176c9e3acd5aee0334c122586aec` adds the LG
-family case and pins core `d7e801d10f02b6effe4d8403ec997913bfd7bb2c`. Core bundle
-PR 64 is still open at `8f66339260e8f921ada5bfbcd451373c5eafee14`.
-Recheck these states before choosing an implementation base. Preserve the
-existing media changes and do not assume a local core pin is publicly released.
+Core [PR 64](https://github.com/edgeloom-oss/edgeloom/pull/64) and
+[PR 65](https://github.com/edgeloom-oss/edgeloom/pull/65) are merged, with the
+media/contracts baseline at `5bd3c8a2d209799d183f7b95ad0653f169dd7e7b`.
+Catalog [PR 6](https://github.com/edgeloom-oss/edgeloom-catalog/pull/6) is merged
+at `f246a43a37c7f9df74de661f7eb7ef16ba01d00d`, adding the LG family case beside
+the Yale bundle. `CORE_REVISION` remains
+`d7e801d10f02b6effe4d8403ec997913bfd7bb2c`, a preserved ancestor of core main.
+This is a reachable development pin, not a new PyPI release. Records remain
+candidates without physical observations or independent community reviews.
+
+Recheck remote heads before choosing an implementation base. Recipe contracts,
+matching, workpacks and candidate generation below remain planned work.
 
 ## Artifact structure
 
