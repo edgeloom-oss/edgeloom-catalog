@@ -1,0 +1,70 @@
+name: Device document or source
+description: Add a manual, implementation reference, or missing evidence to a device bundle
+title: "[Device source] "
+labels: []
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One useful reference is enough. You do not need to write a driver,
+        mapping, or complete bundle. Prefer the publisher's original link;
+        explain the applicable model and what the source actually supports.
+        Please do not upload third-party manuals without redistribution permission.
+  - type: input
+    id: bundle
+    attributes:
+      label: Bundle ID or link (if known)
+      placeholder: yale-yrd210-battery
+  - type: input
+    id: version
+    attributes:
+      label: Bundle version or exact catalog revision (if known)
+      placeholder: 0.1.0
+  - type: input
+    id: feature
+    attributes:
+      label: Feature ID or question (if known)
+      placeholder: battery
+  - type: input
+    id: device
+    attributes:
+      label: Manufacturer, model, protocol and variant
+      description: Public product identifiers only. Say whether this is an exact-model source, family context, or unresolved.
+    validations:
+      required: true
+  - type: input
+    id: source-url
+    attributes:
+      label: Original source URL and publisher
+      description: For a Git source, provide the repository, full commit and path if available.
+    validations:
+      required: true
+  - type: input
+    id: source-version
+    attributes:
+      label: Document revision and page or section
+      description: Include the date you accessed it. Unknown is acceptable; do not invent a revision or digest.
+    validations:
+      required: true
+  - type: textarea
+    id: contribution
+    attributes:
+      label: What does this source help explain?
+      description: State the specific claim, locator, applicability limits and any conflict with current evidence. A short paraphrase is enough.
+    validations:
+      required: true
+  - type: textarea
+    id: attribution
+    attributes:
+      label: Attribution, reuse terms and assistance
+      description: Link any license or rights notice you found. Describe AI assistance if used and which source details you checked. A link does not grant redistribution rights.
+  - type: checkboxes
+    id: boundaries
+    attributes:
+      label: Contribution boundaries
+      options:
+        - label: I removed credentials, access codes, private telemetry and private device or household identifiers.
+          required: true
+        - label: I distinguish the source's statements from my interpretation and do not present source inspection as a device test or independent review.
+          required: true

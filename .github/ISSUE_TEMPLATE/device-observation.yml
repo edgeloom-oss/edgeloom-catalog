@@ -1,5 +1,5 @@
 name: Device observation or request
-description: Suggest a device or report where your driver differs from a catalog finding
+description: Contribute a reported execution, a source observation, or a question about a device bundle
 title: "[Device observation] "
 labels: []
 assignees: []
@@ -11,6 +11,22 @@ body:
         what you observed from what you inferred. Do not post PINs, access codes,
         tokens, private telemetry, household IDs, serial numbers, or unpatched
         vulnerabilities. Use SECURITY.md for private vulnerability reporting.
+        A proposed test is welcome, but mark it as a request rather than a result.
+  - type: input
+    id: bundle
+    attributes:
+      label: Bundle ID or link (if known)
+      placeholder: yale-yrd210-battery
+  - type: input
+    id: version
+    attributes:
+      label: Bundle version or exact catalog revision (if known)
+      placeholder: 0.1.0
+  - type: input
+    id: feature
+    attributes:
+      label: Feature ID or question (if known)
+      placeholder: battery
   - type: input
     id: device
     attributes:
@@ -26,6 +42,11 @@ body:
     validations:
       required: true
   - type: input
+    id: environment
+    attributes:
+      label: Platform version and relevant setup
+      description: Include integration/converter version and relevant public signature or cluster information. Unknown is acceptable.
+  - type: input
     id: report
     attributes:
       label: Catalog report and revision (if relevant)
@@ -38,16 +59,34 @@ body:
         - A device or feature request (not a test)
         - A source-artifact observation (no hardware test)
         - An observation from my own device (not independently verified)
+        - An executed simulation (no physical-device result)
         - A correction to a report's interpretation
     validations:
       required: true
   - type: textarea
     id: observation
     attributes:
-      label: Observation and reproduction steps
-      description: Describe the expected and actual behavior, conditions, and what remains unknown. Sanitize screenshots and logs.
+      label: Procedure or proposed test
+      description: State what you actually did, or explicitly identify a proposed test. Explain conditions and what remains unknown.
     validations:
       required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and observed result
+      description: For an actual execution, report both, even if it failed or was inconclusive. For a request or source inspection, write "No execution performed" and state the question.
+    validations:
+      required: true
+  - type: input
+    id: execution-context
+    attributes:
+      label: Observation date/time, repetitions and outcome
+      description: Include timezone and count for an actual execution; distinguish pass, fail and inconclusive. Leave empty for a request.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence and assistance
+      description: Link sanitized logs, screenshots or public source references. Explain how the evidence relates to the reported result, missing information, and any AI assistance. Do not upload a full unredacted diagnostic dump.
   - type: checkboxes
     id: boundaries
     attributes:

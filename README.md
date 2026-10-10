@@ -7,26 +7,43 @@ data companion to the
 [EdgeLoom toolchain](https://github.com/edgeloom-oss/edgeloom).
 
 > **Pilot status:** this repository contains a founder-seeded YRD156 lock pilot
-> with pinned SmartThings, zwave-js, and OCF-derived SDF references. This review
-> branch adds HA context and a YRD210 Zigbee comparison from ZHA/Zigbee2MQTT. Every real
+> with pinned SmartThings, zwave-js, and OCF-derived SDF references, HA context,
+> and a YRD210 Zigbee comparison from ZHA/Zigbee2MQTT. Every real
 > mapping remains `candidate`: none has completed independent review or become
 > `verified`. The repository does not publish a GitHub Pages site.
 
 ## Inspect a device
 
-This review branch indexes **two explicit device identities**, three feature
+The catalog indexes **two explicit device identities**, three feature
 mapping sets, six mapping assertions and four external-corroboration records
 (nine source observations). These are inventory counts, not supported-device
 counts. Inspect [YRD156](catalog/devices/yale-yrd156.yaml) or
 [YRD210 PB DB (Zigbee)](catalog/devices/yale-yrd210-pb-db.json), or follow
-the core's [five-minute walkthrough](https://github.com/edgeloom-oss/edgeloom/blob/codex/catalog-external-evidence/docs/catalog-quickstart.md)
+the core's [five-minute walkthrough](https://github.com/edgeloom-oss/edgeloom/blob/main/docs/catalog-quickstart.md)
 to generate a searchable browser, shareable device page and Markdown report.
 No account, hub, AI key or physical lock is required.
 
 The browser/report tooling is a **development increment**, not part of the
-PyPI 0.2.0 package. Use the exact core pin below. A generated snapshot is
-prepared for the existing EdgeLoom homepage; publication still requires
-maintainer approval. This repository has no independent Pages deployment.
+PyPI 0.2.0 package. Use the exact core pin below. The
+[published catalog browser](https://edgeloom-oss.github.io/edgeloom/catalog/)
+is a commit-pinned snapshot on the EdgeLoom homepage; a local development
+checkout may contain newer records. This repository has no independent Pages
+deployment.
+
+## Contribute the evidence behind an implementation
+
+The draft [Device Evidence Bundle](catalog/bundles/README.md) combines a scoped
+device identity, official document references, implementation explanations,
+reported executions, open questions and review references in a versioned package.
+The [YRD210 battery sample](catalog/bundles/yale-yrd210-battery.json) adds an
+official manual citation and a proposed observation procedure to the existing
+code comparisons. It has no physical-device results or independent reviews.
+
+You can contribute one source, observation, correction or scoped review;
+maintainers assemble the bundle. See [how to contribute](docs/bundle-contributions.md)
+and the public [format proposal](https://github.com/edgeloom-oss/edgeloom/issues/63).
+Draft bundles are a development addition, not yet a published software release
+or an automatically updated website snapshot.
 
 ## Project boundary
 
@@ -35,7 +52,7 @@ The two repositories have deliberately separate responsibilities:
 | Repository | Owns |
 | --- | --- |
 | [`edgeloom`](https://github.com/edgeloom-oss/edgeloom) | Versioned schemas, validators, CLI behavior, adapters, renderers, and software releases |
-| `edgeloom-catalog` | Pinned source manifests, catalog-authored mapping assertions, evidence references, review records, and any future generated catalog view |
+| `edgeloom-catalog` | Pinned source manifests, document references, mapping assertions, observations, bundle manifests, review references and contributor credit |
 
 The catalog consumes versioned contracts from an exact core pin; it does not
 fork or redefine them locally. See [Repository layout](docs/repository-layout.md)
@@ -57,11 +74,13 @@ python3.11 -m venv .venv
 PYTHON_BIN="$PWD/.venv/bin/python" ./scripts/validate-catalog.sh
 ```
 
-For the current tree, the checks should report 17 explicitly typed documents
-and a successful offline join of six sources, three mapping sets, two device
-entries and four corroboration records. Existing source/mapping contracts
-remain v0.1; the `catalog-device` and candidate-only `catalog-corroboration`
-v0.1 contracts are explicitly draft.
+The checks validate explicitly typed records and join the six Git sources,
+three mapping sets, two device entries and four corroboration records offline.
+They also validate document, observation and bundle records under the new draft
+contracts. The first bundle cites six records, including one official document
+record; no observation record has been added. Existing source/mapping contracts
+remain v0.1. The device, corroboration, document, observation and bundle v0.1
+contracts are explicitly draft.
 The shared script also rejects unrecognized structured files, symbolic links,
 and documents over 1 MiB before invoking the pinned core contracts. It does not
 fetch or execute any artifact named by a source manifest. The pinned core also
@@ -139,6 +158,8 @@ Before proposing a source or mapping, read:
 
 For a device observation or request, use the
 [simple feedback form](https://github.com/edgeloom-oss/edgeloom-catalog/issues/new?template=device-observation.yml).
+For a manual or other reference, use the
+[source form](https://github.com/edgeloom-oss/edgeloom-catalog/issues/new?template=device-source.yml).
 You do not need to write a mapping. Never post PINs, access codes, credentials,
 private device/household identifiers, or private telemetry.
 

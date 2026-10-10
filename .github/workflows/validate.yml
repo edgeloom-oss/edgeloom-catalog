@@ -58,3 +58,7 @@ jobs:
           python -m edgeloom.cli catalog build .. --output /tmp/catalog-first
           python -m edgeloom.cli catalog build .. --output /tmp/catalog-second
           diff -r /tmp/catalog-first /tmp/catalog-second
+          python -m edgeloom.cli bundle export .. yale-yrd210-battery --output /tmp/bundle-first.zip
+          python -m edgeloom.cli bundle export .. yale-yrd210-battery --output /tmp/bundle-second.zip
+          cmp /tmp/bundle-first.zip /tmp/bundle-second.zip
+          python -m edgeloom.cli bundle verify /tmp/bundle-first.zip

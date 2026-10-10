@@ -1,8 +1,11 @@
 # Contributing
 
 Thank you for helping build the EdgeLoom Catalog. Contributions may include
-source manifests, evidence-backed mappings, corrections, independent reviews,
-documentation, validation improvements, and issue triage.
+source manifests, document citations, implementation explanations, reported
+observations, evidence-backed mappings, corrections, independent reviews,
+documentation, validation improvements, and issue triage. Start with the
+[bundle contribution guide](docs/bundle-contributions.md) to contribute one
+useful piece of evidence without authoring a mapping.
 
 This repository records claims about upstream artifacts; it does not distribute
 drivers, certify devices, or make a platform or standard authoritative. Changes
@@ -14,6 +17,9 @@ to the EdgeLoom CLI, schemas, or validators belong in the
 - Use the **mapping submission** form for a new candidate mapping set.
 - Use the **source update** form to pin a new upstream revision or replace a
   source manifest.
+- Use the **device document or source** form for an official manual, vendor
+  page or other implementation reference. State exact-model, family or
+  unresolved applicability.
 - Use the **correction** form when an accepted record is factually wrong,
   incomplete, stale, or no longer reproducible.
 - Use the **independent review** form to volunteer a review or record review
@@ -48,18 +54,28 @@ Every submission must make its provenance and limitations reviewable:
    a stronger claim. Names such as `official`, `community`, and `experimental`
    describe the source, not EdgeLoom adoption or endorsement.
 
-If a source cannot be represented by the current contracts—for example, a
-mutable web page with no immutable repository revision—open an issue describing
-the gap. Do not manufacture provenance to make the record validate.
+Manuals and mutable web pages use the draft `document-source` contract with
+publisher, version, access date, applicability, precise locations and rights.
+Use `link-only` when bytes were not inspected; `digest-recorded` records an
+inspected file without claiming it is archived. Open an issue for sources the
+contracts cannot express. Do not manufacture provenance to make a record validate.
 
 Canonical YAML and JSON records must be no larger than 1 MiB each. Put source
 manifests in `catalog/sources/`, mapping sets in `catalog/mappings/`, and
 device entries in `catalog/devices/`, external comparisons in
-`catalog/corroboration/`, and evidence records in `catalog/evidence/`;
+`catalog/corroboration/`, document metadata in `catalog/documents/`, reported
+executions in `catalog/observations/`, bundle manifests in `catalog/bundles/`,
+and prose evidence records in `catalog/evidence/`;
 CI forces the corresponding schema for
 every structured file in those locations. `catalog/reviews/` remains
 Markdown-only until the core project publishes a standalone review-record
 contract.
+
+Source inspection and upstream fixture references are not actual executions.
+Observation records need a reported execution, its method and environment,
+procedure, expected/observed results, time, outcome and limitations. Proposed
+tests stay in a bundle's `test_plan`. Synthetic examples remain explicitly
+labeled and separate from real contributed observations.
 
 ## Review lifecycle
 
@@ -82,6 +98,13 @@ The new draft corroboration sidecar is candidate-only and accepts no reviewer
 credits. Preserve contradictory observations, partial identity match fields
 and source lineage. Do not call a generic action a model-specific success,
 a fixture a physical test, or multiple dependent repos independent review.
+
+Draft bundles and observations also remain candidate. Bundle reviews identify
+the constituent record IDs and exact digests checked, reviewer, scope and public
+decision URL; they do not promote a whole package to verified. Changing a cited
+record requires updating the package digest and reconsidering affected review
+references. Schema and trust-boundary discussion is tracked in
+[core issue #63](https://github.com/edgeloom-oss/edgeloom/issues/63).
 
 ## Third-party material
 
@@ -141,6 +164,12 @@ reviewers, and correction reporters in repository history. Sustained
 contributors may become reviewers or maintainers through the process in
 [GOVERNANCE.md](GOVERNANCE.md). Current responsibility is recorded in
 [MAINTAINERS.md](MAINTAINERS.md).
+
+Bundle credits can distinguish authorship, source research, observations,
+reviews, corrections and maintenance. Disclose AI assistance and source checks
+in the contribution; assistance does not count as an independent reviewer or
+an experimental participant. Upstream attribution does not imply participation
+in, review of, or endorsement of this catalog.
 
 By participating, you agree to follow the
 [Code of Conduct](CODE_OF_CONDUCT.md).
