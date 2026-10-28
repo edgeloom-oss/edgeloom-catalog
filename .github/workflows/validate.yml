@@ -52,13 +52,13 @@ jobs:
       - name: Validate local catalog contracts
         run: PYTHON_BIN="$(command -v python)" ./scripts/validate-catalog.sh
 
+      - name: Test bundle inventory checks
+        run: python -m unittest discover -s tests -v
+
       - name: Build twice and check deterministic output (no source fetch)
         run: |
           cd .edgeloom-core
           python -m edgeloom.cli catalog build .. --output /tmp/catalog-first
           python -m edgeloom.cli catalog build .. --output /tmp/catalog-second
           diff -r /tmp/catalog-first /tmp/catalog-second
-          python -m edgeloom.cli bundle export .. yale-yrd210-battery --output /tmp/bundle-first.zip
-          python -m edgeloom.cli bundle export .. yale-yrd210-battery --output /tmp/bundle-second.zip
-          cmp /tmp/bundle-first.zip /tmp/bundle-second.zip
-          python -m edgeloom.cli bundle verify /tmp/bundle-first.zip
+          python ../scripts/check-bundle-exports.py ..
